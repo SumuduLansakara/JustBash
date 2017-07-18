@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-export ROOT="$PWD"
+function __init__(){
+    export ROOT="$PWD"
+    export INSTANCEID="$(date +%Y%M%d%H%m%S%3N)"
+    source terminal/main.sh
+}
 
-source terminal/main.sh
+__init__
 
 print_txt "txt message"
 print_inf "inf message"

@@ -23,7 +23,9 @@ function __init__(){
         TXT_TAG=
     fi
     if $ENABLE_LOGGING; then
-        echo "LOGGING ENABLE!"
+        disable_logging
+        print_inf "LOGGING ENABLE!"
+        enable_logging
         . $ROOT/logger/main.sh
         if [[ $? -ne 0 ]]; then
             print_err "errors occured while sourcing logger"

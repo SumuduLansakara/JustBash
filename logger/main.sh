@@ -10,27 +10,41 @@ function __init__()
     fi
     LOGGER_INITIALIZED=true
 
-    if [[ -z $LOGFILE ]]; then
-        ENABLE_LOGGING=false
-    else
-        touch $LOGFILE
+    if ! [[ -e $LOGDIR ]]; then
+        mkdir "$LOGDIR"
         if [[ $? -ne 0 ]]; then
-            ENABLE_LOGGING=false
+            echo "[FATAL] unable to create log directory $LOGDIR"
         fi
     fi
-    if $ENABLE_LOGGING; then
-        echo "" >> $LOGFILE
-        echo "+--------------------------------------+" >> $LOGFILE
-        echo "| LOGGING STARTED: $(date +'%Y-%m-%d %H:%M:%S') |" >> $LOGFILE
-        echo "+--------------------------------------+" >> $LOGFILE
-        echo "" >> $LOGFILE
+    LOGPATH="$LOGDIR/$LOGFILE"
+    if $BACKUP_LAST_LOG; then
+        if [[ -f $LOGPATH ]]; then
+            mv "$LOGPATH" "$LOGDIR/$INSTANCEID-$LOGFILE"
+            if [[ $? -ne 0 ]]; then
+                log_err "failed backing up last log"
+            fi
+        fi
     fi
+    touch $LOGPATH
+    if [[ $? -ne 0 ]]; then
+        ENABLE_LOGGING=false
+    fi
+    if ! $ENABLE_LOGGING; then
+        return
+    fi
+    echo "" >> $LOGPATH
+    echo "+---------------------------------------+" >> $LOGPATH
+    echo "| LOGGING STARTED : $(date +'%Y-%m-%d %H:%M:%S') |" >> $LOGPATH
+    echo "| INSTANCE ID     : $INSTANCEID   |" >> $LOGPATH
+    echo "+---------------------------------------+" >> $LOGPATH
+    echo "" >> $LOGPATH
 }
 
 function __log__(){
-    if $ENABLE_LOGGING; then
-        echo "$(date +'%y%m%d %H:%M:%S.%3N') $1" >> $LOGFILE
+    if ! $ENABLE_LOGGING; then
+        return
     fi
+    echo "$(date +'%y%m%d %H:%M:%S.%3N') $1" >> $LOGPATH
 }
 
 # public functions
