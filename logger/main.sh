@@ -1,6 +1,6 @@
 # source dependent scripts
-. settings.sh
-. configs.sh
+. $ROOT/logger/settings.sh
+. $ROOT/logger/configs.sh
 
 # private functions
 function __init__()
@@ -52,7 +52,10 @@ function log_err(){
 
 # entry point
 __init__
-__init__
+export -f log_txt
+export -f log_inf
+export -f log_wrn
+export -f log_err
 
 if [[ $1 == "DEBUG" ]]; then
     log_txt "text log"

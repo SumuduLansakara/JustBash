@@ -1,6 +1,6 @@
 # source dependent scripts
-. settings.sh
-. configs.sh
+. $ROOT/terminal/settings.sh
+. $ROOT/terminal/configs.sh
 
 # private functions
 function __init__(){
@@ -22,7 +22,13 @@ function __init__(){
         WRN_TAG=
         TXT_TAG=
     fi
-    set_newline
+    if $ENABLE_LOGGING; then
+        echo "LOGGING ENABLE!"
+        . $ROOT/logger/main.sh
+        if [[ $? -ne 0 ]]; then
+            print_err "errors occured while sourcing logger"
+        fi
+    fi
 }
 
 function __print_clr__(){
@@ -52,11 +58,22 @@ function unset_newline() {
     END_WITH_NEWLINE=false
 }
 
+function enable_logging(){
+    ENABLE_LOGGING=true
+}
+
+function disable_logging(){
+    ENABLE_LOGGING=false
+}
+
 function print_txt() {
     __print_clr__ "$TXT_CLR"
     __print_tag__ "$TXT_TAG"
     __print__ "$1"
     __print_clr__ "$RST_CLR"
+    if $ENABLE_LOGGING; then
+        log_txt "$1"
+    fi
 }
 
 function print_inf() {
@@ -64,6 +81,9 @@ function print_inf() {
     __print_tag__ "$INF_TAG"
     __print__ "$1"
     __print_clr__ "$RST_CLR"
+    if $ENABLE_LOGGING; then
+        log_inf "$1"
+    fi
 }
 
 function print_wrn() {
@@ -71,6 +91,9 @@ function print_wrn() {
     __print_tag__ "$WRN_TAG"
     __print__ "$1"
     __print_clr__ "$RST_CLR"
+    if $ENABLE_LOGGING; then
+        log_wrn "$1"
+    fi
 }
 
 function print_err() {
@@ -78,10 +101,21 @@ function print_err() {
     __print_tag__ "$ERR_TAG"
     __print__ "$1"
     __print_clr__ "$RST_CLR"
+    if $ENABLE_LOGGING; then
+        log_err "$1"
+    fi
 }
 
 # entry point
 __init__
+export -f set_newline
+export -f unset_newline
+export -f enable_logging
+export -f disable_logging
+export -f print_txt
+export -f print_inf
+export -f print_wrn
+export -f print_err
 
 if [[ $1 == "DEBUG" ]]; then
     print_txt "text message"
