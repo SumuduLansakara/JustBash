@@ -36,10 +36,10 @@ function __init__()
 
     # log banner
     timestamp="$(date +'%Y-%m-%d %H:%M:%S')"
-    echo "+$(printf -- "-%.0s" {1..39} )+" >> $LOGPATH
-    echo "| LOGGING STARTED : $(printf '%-19s' "$timestamp") |" >> $LOGPATH
-    echo "| INSTANCE ID     : $(printf '%-19s' "$INSTANCEID") |" >> $LOGPATH
-    echo "+$(printf -- "-%.0s" {1..39} )+" >> $LOGPATH
+    echo "+$(printf -- "-%.0s" {1..45} )+" >> $LOGPATH
+    echo "| LOGGING STARTED : $(printf '%-25s' "$timestamp") |" >> $LOGPATH
+    echo "| INSTANCE ID     : $(printf '%-25s' "$INSTANCEID") |" >> $LOGPATH
+    echo "+$(printf -- "-%.0s" {1..45} )+" >> $LOGPATH
     echo "" >> $LOGPATH
 }
 

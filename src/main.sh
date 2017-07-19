@@ -10,7 +10,7 @@ function __init__(){
             echo "[ERR][MAIN] instance ID not provided"
             exit 1
         fi
-        export INSTANCEID="$(date +%Y%M%d%H%m%S%3N)"
+        export INSTANCEID="$(date +%Y%M%d%H%m%S%3N)-DEBUG"
         echo "[DBG] starting debug instance: $INSTANCEID"
     fi
 
