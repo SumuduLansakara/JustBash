@@ -1,2 +1,2 @@
-LOGFILE="testlog.log"
+LOGFILENAME="bashrun-$INSTANCEID.log"
 LOGDIR="$ROOT/logs"

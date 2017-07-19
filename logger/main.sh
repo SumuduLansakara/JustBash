@@ -11,28 +11,30 @@ function __init__()
     LOGGER_INITIALIZED=true
 
     if ! [[ -e $LOGDIR ]]; then
-        mkdir "$LOGDIR"
+        mkdir "$LOGDIR" &>/dev/null
         if [[ $? -ne 0 ]]; then
-            echo "[FATAL] unable to create log directory $LOGDIR"
+            echo "[ERR][LOGGER] unable to create log directory $LOGDIR"
         fi
     fi
-    LOGPATH="$LOGDIR/$LOGFILE"
-    if $BACKUP_LAST_LOG; then
-        if [[ -f $LOGPATH ]]; then
-            mv "$LOGPATH" "$LOGDIR/$INSTANCEID-$LOGFILE"
-            if [[ $? -ne 0 ]]; then
-                log_err "failed backing up last log"
-            fi
-        fi
-    fi
-    touch $LOGPATH
-    if [[ $? -ne 0 ]]; then
-        ENABLE_LOGGING=false
-    fi
-    if ! $ENABLE_LOGGING; then
+    LOGPATH="$LOGDIR/$LOGFILENAME"
+    if [[ -f $LOGPATH ]]; then
         return
     fi
-    echo "" >> $LOGPATH
+
+    touch $LOGPATH &>/dev/null
+    if [[ $? -ne 0 ]]; then
+        ENABLE_LOGGING=false
+        return
+    fi
+
+    cd "$LOGDIR" &>/dev/null
+    ln -sf "$LOGFILENAME" lastlog &>/dev/null
+    if [[ $? -ne 0 ]]; then
+        echo "[ERR][LOGGER] failed uplading lastlog link"
+    fi
+    cd - &>/dev/null
+
+    # log banner
     echo "+---------------------------------------+" >> $LOGPATH
     echo "| LOGGING STARTED : $(date +'%Y-%m-%d %H:%M:%S') |" >> $LOGPATH
     echo "| INSTANCE ID     : $INSTANCEID   |" >> $LOGPATH
