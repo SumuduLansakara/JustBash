@@ -24,7 +24,7 @@ function __init__(){
     fi
     if $ENABLE_LOGGING; then
         disable_logging
-        print_inf "LOGGING ENABLE!"
+        print_dbg "logging enabled"
         enable_logging
         . $ROOT/logger/main.sh
         if [[ $? -ne 0 ]]; then
@@ -52,6 +52,16 @@ function __print__(){
 }
 
 # public functions
+function print_dbg() {
+    __print_clr__ "$DBG_CLR"
+    __print_tag__ "$DBG_TAG"
+    __print__ "$1"
+    __print_clr__ "$RST_CLR"
+    if $ENABLE_LOGGING; then
+        log_dbg "[term] $1"
+    fi
+}
+
 function print_txt() {
     __print_clr__ "$TXT_CLR"
     __print_tag__ "$TXT_TAG"
@@ -119,6 +129,8 @@ export -f set_newline
 export -f unset_newline
 export -f enable_logging
 export -f disable_logging
+
+export -f print_dbg
 export -f print_txt
 export -f print_inf
 export -f print_wrn

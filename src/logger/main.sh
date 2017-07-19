@@ -51,6 +51,10 @@ function __log__(){
 }
 
 # public functions
+function log_dbg(){
+    __log__ "[D] $1"
+}
+
 function log_txt(){
     __log__ "[T] $1"
 }
@@ -72,6 +76,7 @@ __init__
 
 export -f __log__
 
+export -f log_dbg
 export -f log_txt
 export -f log_inf
 export -f log_wrn
