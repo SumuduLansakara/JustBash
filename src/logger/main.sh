@@ -47,7 +47,11 @@ function __log__(){
     if ! $ENABLE_LOGGING; then
         return
     fi
-    echo "$(date +'%y%m%d %H:%M:%S.%3N') $1" >> $LOGPATH
+    if $ENABLE_LOG_TIMESTAMP; then
+        echo "$(date +'%y%m%d %H:%M:%S.%3N') $1" >> $LOGPATH
+    else
+        echo "$1" >> $LOGPATH
+    fi
 }
 
 # public functions
@@ -71,6 +75,15 @@ function log_err(){
     __log__ "[E] $1"
 }
 
+function enable_log_timestamp(){
+    export ENABLE_LOG_TIMESTAMP=true
+}
+
+function disable_log_timestamp(){
+    export ENABLE_LOG_TIMESTAMP=false
+}
+
+
 # entry point
 __init__
 
@@ -81,6 +94,9 @@ export -f log_txt
 export -f log_inf
 export -f log_wrn
 export -f log_err
+
+export -f enable_log_timestamp
+export -f disable_log_timestamp
 
 if [[ $1 == "DEBUG" ]]; then
     log_txt "text log"
