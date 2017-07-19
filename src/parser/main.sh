@@ -17,14 +17,12 @@ function validate_arg_count(){
     # $3: recieved arg count
     if [[ $1 != '-' ]]; then
         if [[ $3 < $1 ]]; then
-            print_err "not enough input arguments provided. minimum expected $1, provided $3"
-            exit 1
+            return 1
         fi
     fi
     if [[ $2 != '-' ]]; then
         if [[ $3 > $2 ]]; then
-            print_err "exceeding number of input arguments provided. maximum expected $2, provided $3"
-            exit 1
+            return 2
         fi
     fi
 }

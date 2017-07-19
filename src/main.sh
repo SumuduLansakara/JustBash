@@ -67,6 +67,7 @@ function __argparse__(){
     done
 
     CMD_ARGS=$*
+    CMD_ARG_COUNT="${#*}"
 }
 
 function __help__(){
@@ -97,7 +98,33 @@ if ! [[ -f $CMD_PATH ]]; then
     print_err "invalid file found for $CMD at $CMD_PATH"
     exit 1
 fi
-print_dbg "starting command '$CMD' with args '$CMD_ARGS'"
+
+print_dbg "command '$CMD' is about to be invoked with args '$CMD_ARGS'"
+print_dbg "parsing argument count"
+headline=$(head -n 1 $ROOT/tools/$CMD.sh)
+if [[ "$headline" =~ ^\#arg_count=([0-9]*):([0-9]*)$ ]]; then
+    min="${BASH_REMATCH[1]}"
+    max="${BASH_REMATCH[2]}"
+    if [[ -z $min ]]; then
+        min='-'
+    fi
+    if [[ -z $max ]]; then
+        max='-'
+    fi
+    validate_arg_count $min $max $CMD_ARG_COUNT
+    if [[ $? == 1 ]]; then
+        print_err "insufficient number of  input arguments provided for '$CMD' command. minimum expected $min, provided $CMD_ARG_COUNT"
+        exit -1
+    elif [[ $? == 2 ]]; then
+        print_err "exceeding number of input arguments provided for '$CMD' command. maximum expected $max, provided $CMD_ARG_COUNT"
+        exit -1
+    fi
+    print_dbg "argument count valid. '$CMD_ARG_COUNT' provided, expected [$min:$max]"
+else
+    print_dbg "argument counts are not defined for '$CMD' command"
+fi
+
+# invoke command
 bash $ROOT/tools/$CMD.sh $CMD_ARGS
 CMD_ERR="$?"
 print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
