@@ -35,10 +35,11 @@ function __init__()
     cd - &>/dev/null
 
     # log banner
-    echo "+---------------------------------------+" >> $LOGPATH
-    echo "| LOGGING STARTED : $(date +'%Y-%m-%d %H:%M:%S') |" >> $LOGPATH
-    echo "| INSTANCE ID     : $INSTANCEID   |" >> $LOGPATH
-    echo "+---------------------------------------+" >> $LOGPATH
+    timestamp="$(date +'%Y-%m-%d %H:%M:%S')"
+    echo "+$(printf -- "-%.0s" {1..39} )+" >> $LOGPATH
+    echo "| LOGGING STARTED : $(printf '%-19s' "$timestamp") |" >> $LOGPATH
+    echo "| INSTANCE ID     : $(printf '%-19s' "$INSTANCEID") |" >> $LOGPATH
+    echo "+$(printf -- "-%.0s" {1..39} )+" >> $LOGPATH
     echo "" >> $LOGPATH
 }
 
