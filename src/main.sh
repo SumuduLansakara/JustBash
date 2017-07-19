@@ -15,6 +15,7 @@ function __init__(){
     fi
 
     source $ROOT/terminal/main.sh
+    source $ROOT/parser/main.sh
 }
 
 function __argparse__(){
