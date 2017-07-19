@@ -2,6 +2,8 @@
 ## What is it?
 BASHRUN is a heavily customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, argument validating etc...
 
+Users can implement custom scripts for performing whatever task that can be done through bash and invoke them through BASHRUN. BASHRUN provides a set of few and simple functions for displaying messages to standatd output (in place on echo), logging etc...
+
 ## System requirements
 BASHRUN can be used in any Linux environment. It does not require any additional tools, it just uses the standard Linux tools available in most distributions by default.
 
