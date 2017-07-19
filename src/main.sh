@@ -125,8 +125,11 @@ else
 fi
 
 # invoke command
-bash $ROOT/tools/$CMD.sh $CMD_ARGS
+output=$(bash $ROOT/tools/$CMD.sh $CMD_ARGS)
 CMD_ERR="$?"
+unset_newline
+print_txt "$output"
+set_newline
 print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
 if [[ $CMD_ERR -ne 0 ]]; then
     print_err "$CMD returned with error $CMD_ERR"
