@@ -10,7 +10,7 @@ function __init__(){
             echo "[ERR][MAIN] instance ID not provided"
             exit 1
         fi
-        export INSTANCEID="$(date +%Y%M%d%H%m%S%3N)-DEBUG"
+        export INSTANCEID="DEBUG"
         echo "[DBG] starting debug instance: $INSTANCEID"
     fi
 
@@ -25,7 +25,7 @@ function __argparse__(){
     fi
 
     # id, cmd, debug
-    SHORT_ARGS=i:c:d
+    SHORT_ARGS=i:c:dh
 
     PARSED=$(getopt --options $SHORT_ARGS --name "$0" -- "$@")
     if [[ $? -ne 0 ]]; then
@@ -50,6 +50,10 @@ function __argparse__(){
                 export DEBUG_MODE=true
                 shift
                 ;;
+            -h)
+                __help__
+                exit 0
+                ;;
             --)
                 shift
                 break
@@ -64,9 +68,25 @@ function __argparse__(){
     CMD_ARGS=$*
 }
 
+function __help__(){
+    echo "Usage:"
+    echo "  $0 [-i instance_id] [-c command_name] [-d] [-h] "
+    echo ""
+    echo "Options:"
+    echo "  -i <instance_id>  : MrBash instance id"
+    echo "  -c <command_name> : command to be invoked"
+    echo "  -d                : enable debug output"
+    echo "  -h                : display this help message"
+}
+
+ORIGINAL_ARGS=$*
 __init__ $*
 
 # start execution
+if [[ -z $CMD ]]; then
+    print_err "no command provided"
+    exit 1
+fi
 CMD_PATH=$ROOT/tools/$CMD.sh
 if ! [[ -e $CMD_PATH ]]; then
     print_err "$CMD command not found"
