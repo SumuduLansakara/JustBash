@@ -1,4 +1,5 @@
 # all the display related configurations are defined here
+export TERMINAL_INITIALIZED=false
 
 # ANSI color codes
 export DBG_CLR='34'

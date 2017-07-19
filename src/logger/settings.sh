@@ -1,1 +1,2 @@
-ENABLE_LOGGING=true
+export ENABLE_LOGGING=true
+export ENABLE_LOG_TIMESTAMP=true

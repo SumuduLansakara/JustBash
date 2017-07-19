@@ -5,7 +5,7 @@
 # private functions
 function __init__()
 {
-    if ! [[ -z $PARSER_INITIALIZED ]]; then
+    if $PARSER_INITIALIZED; then
         return
     fi
     export PARSER_INITIALIZED=true

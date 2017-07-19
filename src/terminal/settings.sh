@@ -1,5 +1,5 @@
 # terminal settings
-ENABLE_COLORS=true
-DISPLAY_TAGS=true
-ENABLE_LOGGING=true
-END_WITH_NEWLINE=true
+export ENABLE_COLORS=true
+export DISPLAY_TAGS=true
+export ENABLE_LOGGING=true
+export END_WITH_NEWLINE=true

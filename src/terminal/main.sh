@@ -4,23 +4,25 @@
 
 # private functions
 function __init__(){
-    if ! [[ -z $TERMINAL_INITIALIZED ]]; then
+    if $TERMINAL_INITIALIZED; then
         return
     fi
     export TERMINAL_INITIALIZED=true
 
     if ! $ENABLE_COLORS; then
-        ERR_CLR=
-        INF_CLR=
-        WRN_CLR=
-        TXT_CLR=
-        RST_CLR=
+        export DBG_CLR=
+        export TXT_CLR=
+        export INF_CLR=
+        export WRN_CLR=
+        export ERR_CLR=
+        export RST_CLR=
     fi
     if ! $DISPLAY_TAGS; then
-        ERR_TAG=
-        INF_TAG=
-        WRN_TAG=
-        TXT_TAG=
+        export DBG_TAG=
+        export TXT_TAG=
+        export INF_TAG=
+        export WRN_TAG=
+        export ERR_TAG=
     fi
     if $ENABLE_LOGGING; then
         disable_logging

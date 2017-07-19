@@ -1,2 +1,3 @@
+export LOGGER_INITIALIZED=false
 LOGFILENAME="justbash-$INSTANCEID.log"
 LOGDIR="$WORKDIR/logs"

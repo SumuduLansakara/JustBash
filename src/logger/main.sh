@@ -5,7 +5,7 @@
 # private functions
 function __init__()
 {
-    if ! [[ -z $LOGGER_INITIALIZED ]]; then
+    if $LOGGER_INITIALIZED; then
         return
     fi
     export LOGGER_INITIALIZED=true
