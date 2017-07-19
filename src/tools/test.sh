@@ -1,8 +1,7 @@
 #arg_count=1:
 
-echo ">>> directly echoed message without using terminal methods <<<"
-
 print_inf "test command started"
+echo ">>> directly echoed message without using terminal methods <<<"
 print_wrn "number of arguments recieved: ${#*}"
 print_txt "arguments: '$*'"
 print_err "returning with fake error"

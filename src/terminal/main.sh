@@ -104,6 +104,17 @@ function print_err() {
     fi
 }
 
+function print_tool_output(){
+    __print__ "$1"
+    if $ENABLE_LOGGING; then
+        __log__ "[stdout][bgn]"
+        disable_log_timestamp
+        __log__ "$1"
+        enable_log_timestamp
+        __log__ "[stdout][end]"
+    fi
+}
+
 function set_newline() {
     END_WITH_NEWLINE=true
 }
@@ -137,6 +148,7 @@ export -f print_txt
 export -f print_inf
 export -f print_wrn
 export -f print_err
+export -f print_tool_output
 
 if [[ $1 == "DEBUG" ]]; then
     print_txt "text message"

@@ -128,7 +128,7 @@ fi
 output=$(bash $ROOT/tools/$CMD.sh $CMD_ARGS)
 CMD_ERR="$?"
 unset_newline
-print_txt "$output"
+print_tool_output "$output"
 set_newline
 print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
 if [[ $CMD_ERR -ne 0 ]]; then
