@@ -127,9 +127,9 @@ fi
 # invoke command
 output=$(bash $ROOT/tools/$CMD.sh $CMD_ARGS)
 CMD_ERR="$?"
-unset_newline
+disable_autonewline
 print_tool_output "$output"
-set_newline
+enable_autonewline
 print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
 if [[ $CMD_ERR -ne 0 ]]; then
     print_err "$CMD returned with error $CMD_ERR"

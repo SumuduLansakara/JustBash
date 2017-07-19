@@ -44,9 +44,6 @@ function __print_tag__(){
 }
 
 function __print__(){
-    if [[ $2 != "-" ]]; then
-        echo -n ""
-    fi
     echo -n "$1"
     if $END_WITH_NEWLINE; then
         echo ""
@@ -115,11 +112,11 @@ function print_tool_output(){
     fi
 }
 
-function set_newline() {
+function enable_autonewline() {
     END_WITH_NEWLINE=true
 }
 
-function unset_newline() {
+function disable_autonewline() {
     END_WITH_NEWLINE=false
 }
 
@@ -138,8 +135,8 @@ export -f __print_clr__
 export -f __print_tag__
 export -f __print__
 
-export -f set_newline
-export -f unset_newline
+export -f enable_autonewline
+export -f disable_autonewline
 export -f enable_logging
 export -f disable_logging
 
