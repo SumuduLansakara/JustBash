@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-function __init__(){
-    export ROOT="$(dirname $0)"
-    source $ROOT/settings.sh
+export ROOT="$(dirname $0)"
+source $ROOT/settings.sh
 
+function __init__(){
     __argparse__ $*
 
     if [[ -z $INSTANCEID ]]; then
@@ -81,10 +81,10 @@ function __help__(){
     echo "  -h                : display this help message"
 }
 
-ORIGINAL_ARGS=$*
+# execute
 __init__ $*
 
-# start execution
+# parse and validate command
 if [[ -z $CMD ]]; then
     print_err "no command provided"
     exit 1
