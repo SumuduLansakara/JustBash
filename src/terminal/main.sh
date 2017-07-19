@@ -52,22 +52,6 @@ function __print__(){
 }
 
 # public functions
-function set_newline() {
-    END_WITH_NEWLINE=true
-}
-
-function unset_newline() {
-    END_WITH_NEWLINE=false
-}
-
-function enable_logging(){
-    ENABLE_LOGGING=true
-}
-
-function disable_logging(){
-    ENABLE_LOGGING=false
-}
-
 function print_txt() {
     __print_clr__ "$TXT_CLR"
     __print_tag__ "$TXT_TAG"
@@ -108,8 +92,29 @@ function print_err() {
     fi
 }
 
+function set_newline() {
+    END_WITH_NEWLINE=true
+}
+
+function unset_newline() {
+    END_WITH_NEWLINE=false
+}
+
+function enable_logging(){
+    ENABLE_LOGGING=true
+}
+
+function disable_logging(){
+    ENABLE_LOGGING=false
+}
+
+
 # entry point
 __init__
+export -f __print_clr__
+export -f __print_tag__
+export -f __print__
+
 export -f set_newline
 export -f unset_newline
 export -f enable_logging

@@ -16,7 +16,7 @@ function __init__()
             echo "[ERR][LOGGER] unable to create log directory $LOGDIR"
         fi
     fi
-    LOGPATH="$LOGDIR/$LOGFILENAME"
+    export LOGPATH="$LOGDIR/$LOGFILENAME"
     if [[ -f $LOGPATH ]]; then
         return
     fi
@@ -69,6 +69,9 @@ function log_err(){
 
 # entry point
 __init__
+
+export -f __log__
+
 export -f log_txt
 export -f log_inf
 export -f log_wrn

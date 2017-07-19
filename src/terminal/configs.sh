@@ -1,14 +1,14 @@
 # all the display related configurations are defined here
 
 # ANSI color codes
-ERR_CLR='31'
-INF_CLR='32'
-WRN_CLR='33'
-TXT_CLR='0'
-RST_CLR='0'
+export ERR_CLR='31'
+export INF_CLR='32'
+export WRN_CLR='33'
+export TXT_CLR='0'
+export RST_CLR='0'
 
 # display tags
-ERR_TAG='[err] '
-INF_TAG='[inf] '
-WRN_TAG='[wrn] '
-TXT_TAG='[txt] '
+export ERR_TAG='[err] '
+export INF_TAG='[inf] '
+export WRN_TAG='[wrn] '
+export TXT_TAG='[txt] '
