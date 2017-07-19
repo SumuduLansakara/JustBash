@@ -7,7 +7,7 @@ function __init__(){
     if ! [[ -z $TERMINAL_INITIALIZED ]]; then
         return
     fi
-    TERMINAL_INITIALIZED=true
+    export TERMINAL_INITIALIZED=true
 
     if ! $ENABLE_COLORS; then
         ERR_CLR=

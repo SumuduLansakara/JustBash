@@ -8,7 +8,7 @@ function __init__()
     if ! [[ -z $LOGGER_INITIALIZED ]]; then
         return
     fi
-    LOGGER_INITIALIZED=true
+    export LOGGER_INITIALIZED=true
 
     if ! [[ -e $LOGDIR ]]; then
         mkdir "$LOGDIR" &>/dev/null
