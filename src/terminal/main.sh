@@ -68,7 +68,7 @@ function print_txt() {
     __print__ "$1"
     __print_clr__ "$RST_CLR"
     if $ENABLE_LOGGING; then
-        log_txt "$1"
+        log_txt "[term] $1"
     fi
 }
 
@@ -78,7 +78,7 @@ function print_inf() {
     __print__ "$1"
     __print_clr__ "$RST_CLR"
     if $ENABLE_LOGGING; then
-        log_inf "$1"
+        log_inf "[term] $1"
     fi
 }
 
@@ -88,7 +88,7 @@ function print_wrn() {
     __print__ "$1"
     __print_clr__ "$RST_CLR"
     if $ENABLE_LOGGING; then
-        log_wrn "$1"
+        log_wrn "[term] $1"
     fi
 }
 
@@ -98,7 +98,7 @@ function print_err() {
     __print__ "$1"
     __print_clr__ "$RST_CLR"
     if $ENABLE_LOGGING; then
-        log_err "$1"
+        log_err "[term] $1"
     fi
 }
 
