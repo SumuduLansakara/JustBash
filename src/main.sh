@@ -60,9 +60,13 @@ function __argparse__(){
                 ;;
         esac
     done
+
+    CMD_ARGS=$*
 }
 
 __init__ $*
+
+bash $ROOT/tools/$COMMAND.sh $CMD_ARGS
 
 print_txt "txt message"
 print_inf "inf message"
