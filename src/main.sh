@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 function __init__(){
-    export ROOT="$PWD"
+    export ROOT="$(dirname $0)"
+    source $ROOT/settings.sh
 
     if [[ $# -eq 0 ]]; then
         echo "[DBG] running in debug mode"
@@ -9,7 +10,7 @@ function __init__(){
         export INSTANCEID="$1"
     fi
 
-    source terminal/main.sh
+    source $ROOT/terminal/main.sh
 }
 
 __init__ $*
