@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 function __init__(){
     export ROOT="$PWD"
-    export INSTANCEID="$(date +%Y%M%d%H%m%S%3N)"
+
+    if [[ $# -eq 0 ]]; then
+        echo "[DBG] running in debug mode"
+        export INSTANCEID="$(date +%Y%M%d%H%m%S%3N)"
+    else
+        export INSTANCEID="$1"
+    fi
+
     source terminal/main.sh
 }
 
-__init__
+__init__ $*
 
 print_txt "txt message"
 print_inf "inf message"
