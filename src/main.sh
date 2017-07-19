@@ -43,7 +43,7 @@ function __argparse__(){
                 shift 2
                 ;;
             -c|--cmd)
-                COMMAND=$2
+                CMD=$2
                 shift 2
                 ;;
             -d|--debug)
@@ -66,14 +66,20 @@ function __argparse__(){
 
 __init__ $*
 
-bash $ROOT/tools/$COMMAND.sh $CMD_ARGS
-
-print_txt "txt message"
-print_inf "inf message"
-print_wrn "wrn message"
-print_err "err message"
-
-disable_logging
-print_txt "silent message"
-enable_logging
-print_txt "logged message"
+# start execution
+CMD_PATH=$ROOT/tools/$CMD.sh
+if ! [[ -e $CMD_PATH ]]; then
+    print_err "$CMD command not found"
+    exit 1
+fi
+if ! [[ -f $CMD_PATH ]]; then
+    print_err "invalid file found for $CMD at $CMD_PATH"
+    exit 1
+fi
+print_dbg "starting command '$CMD' with args '$CMD_ARGS'"
+bash $ROOT/tools/$CMD.sh $CMD_ARGS
+CMD_ERR="$?"
+print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
+if [[ $CMD_ERR -ne 0 ]]; then
+    print_err "$CMD returned with error $CMD_ERR"
+fi
