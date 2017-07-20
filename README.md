@@ -57,7 +57,8 @@ JustBash macros,
 
 Following features are will be available soon.
 
- - ability to implement/run user defined scripts
+ - ability to re-write lines
+
 
 License
 ----
