@@ -1,34 +1,57 @@
-# BASHRUN
-## What is it?
-BASHRUN is a heavily customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, argument validating etc...
+```
+	
+	
+	     ____.               __ __________               .__     
+	    |    |__ __  _______/  |\______   \_____    _____|  |__  
+	    |    |  |  \/  ___/\   __\    |  _/\__  \  /  ___/  |  \ 
+	/\__|    |  |  /\___ \  |  | |    |   \ / __ \_\___ \|   Y  \
+	\________|____//____  > |__| |______  /(____  /____  >___|  /
+	                    \/              \/      \/     \/     \/ 
+	
+	
+```
+                                    
 
-Users can implement custom scripts for performing whatever task that can be done through bash and invoke them through BASHRUN. BASHRUN provides a set of few and simple functions for displaying messages to standatd output (in place on echo), logging etc...
+# JustBash
+
+## Introduction
+JustBash is a highly customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, argument validating etc...
+
+Users can implement custom scripts for performing whatever task that can be done through bash and invoke them through JustBash. JustBash provides a set of simple and convinient functions for displaying messages, logging etc...
 
 ## System requirements
-BASHRUN can be used in any Linux environment. It does not require any additional tools, it just uses the standard Linux tools available in most distributions by default.
+JustBash can be used in any Linux environment. It does not require any additional tools, it just uses the standard Linux tools available in most distributions by default.
 
-## What does it have?
-Currently it provides following modules.
+## Usage
+JustBash main script is invoked with the name of the desired JustBash command, instance ID and other required arguments (command-line arguments for the JustBash script, debug flags etc..). Then from inside it will perform initial validations and invoke the requested script.
 
- - Terminal
- - Logger
-
-## How to invoke?
-Just invoke the main.sh in the topmost directory with a unique ID.
-
-e.g.
+e.g. Asuming the environment variable `$JustBash` points to the JustBash root directory,
 ``` sh
-    $ $BASHRUN/main.sh my-instance-1
+    $ $JustBash/main.sh -i test_instance_1 -c test
 ```
 
-This ID can be anything, it's just there to make it easy to identify the instance while analyzing the logs.
+### Instance ID
+Instance ID is there to make it easy to identify the JustBash instance while analyzing logs.
 
-Default BASHRUN logfile is created in the following format.
+Default JustBash logfile is created in the following format.
 ```
-bashrun-<INSTANCE ID>.log
+justbash-<INSTANCE ID>.log
 ```
 
 All the log entries with the same instance ID will be written to a single file.
+
+### JustBash scripts
+JustBash scripts are implemented by the user. A JustBash script is an ordinary bash script which is implemented utilizing the features provided by JustBash.
+
+## JustBash Features
+JustBash provides a set of functions and macros users can use from inside the JustBash script they are developing.
+
+JustBash functions include,
+ - functions to display messages with different error levels
+ - logging functions to log messages with different error levels
+
+JustBash macros,
+ - macro to validate user defined scripts input argument count
 
 ## Todos
 
