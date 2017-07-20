@@ -19,6 +19,11 @@ function __init__(){
     if $LOAD_ARTIST; then
         source $ROOT/artist/main.sh
         print_dbg "artist loaded"
+        if $ENABLE_WELCOME_BANNER; then
+            draw_inf "Welcome to"
+            draw_inf " JustBash!"
+            draw_inf "----------"
+        fi
     fi
 }
 
