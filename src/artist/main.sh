@@ -24,7 +24,8 @@ function __load_symbols__(){
         fi
     done
     if [[ -z $block_width ]] || [[ -z $symbol_height ]]|| [[ -z $start_ascii ]]|| [[ -z $symbol_count ]]; then
-        echo "insufficient symbol file metadata"
+        print_err "invalid symbol file '$SYMBOL_FILE'"
+        exit 1
     fi
     symbol_start_line=$(($(sed -n '/#>METADATA_END/=' "$SYMBOL_FILE") + 1))
     symbol_end_line=$(($(($symbol_count * $(($symbol_height+1))))+1))
