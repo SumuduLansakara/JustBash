@@ -16,6 +16,10 @@ function __init__(){
 
     source $ROOT/terminal/main.sh
     source $ROOT/parser/main.sh
+    if $LOAD_ARTIST; then
+        print_dbg "artist loaded!"
+        source $ROOT/artist/main.sh
+    fi
 }
 
 function __argparse__(){
@@ -125,12 +129,15 @@ else
 fi
 
 # invoke command
+print_dbg "invking command '$CMD'"
 output=$(bash $ROOT/tools/$CMD.sh $CMD_ARGS)
 CMD_ERR="$?"
+print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
+print_dbg "start printing and logging command output"
 disable_autonewline
 print_tool_output "$output"
 enable_autonewline
-print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
+print_dbg "end printing and logging command output"
 if [[ $CMD_ERR -ne 0 ]]; then
     print_err "$CMD returned with error $CMD_ERR"
 fi
