@@ -8,16 +8,6 @@ function __init__(){
         return
     fi
     export ARTIST_INITIALIZED=true
-
-    if $ENABLE_LOGGING; then
-        disable_logging
-        print_dbg "logging enabled"
-        enable_logging
-        . $ROOT/logger/main.sh
-        if [[ $? -ne 0 ]]; then
-            print_err "errors occured while sourcing logger"
-        fi
-    fi
 }
 
 function __load_symbols__(){
@@ -82,7 +72,7 @@ function draw_txt() {
     __draw_text__ "$1"
     __print_clr__ "$RST_CLR"
     if $ENABLE_LOGGING; then
-        log_txt "[term] $1"
+        log_txt "[art] $1"
     fi
 }
 
@@ -91,7 +81,7 @@ function draw_inf() {
     __draw_text__ "$1"
     __print_clr__ "$RST_CLR"
     if $ENABLE_LOGGING; then
-        log_inf "[term] $1"
+        log_inf "[art] $1"
     fi
 }
 
@@ -100,7 +90,7 @@ function draw_wrn() {
     __draw_text__ "$1"
     __print_clr__ "$RST_CLR"
     if $ENABLE_LOGGING; then
-        log_wrn "[term] $1"
+        log_wrn "[art] $1"
     fi
 }
 
@@ -109,7 +99,7 @@ function draw_err() {
     __draw_text__ "$1"
     __print_clr__ "$RST_CLR"
     if $ENABLE_LOGGING; then
-        log_err "[term] $1"
+        log_err "[art] $1"
     fi
 }
 
