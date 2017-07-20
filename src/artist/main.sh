@@ -16,7 +16,6 @@ function __init__(){
 }
 
 function __load_symbols__(){
-    # $1: filename
     for line in $(sed -n '/#>METADATA_BEGIN/,/#>METADATA_END/p' "$SYMBOL_FILE"); do
         if [[ $line =~ ^#\>BLOCK_WIDTH=([0-9]*)$ ]]; then
             export block_width="${BASH_REMATCH[1]}"
@@ -45,7 +44,7 @@ function __load_symbols__(){
 
 function __draw_ascii__(){
     if ! [[ -v ALPHABET[@] ]]; then
-        __load_symbols__ "$SYMBOL_FILE"
+        __load_symbols__ 
     fi
     for row in $(seq 0 $(($symbol_height-1))); do
         for sym_ascii in $*; do
