@@ -1,4 +1,4 @@
-#arg_count=1:
+#arg_count=:3
 
 # terminal test
 print_inf "test command started"
