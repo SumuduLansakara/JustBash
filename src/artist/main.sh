@@ -8,6 +8,11 @@ function __init__(){
         return
     fi
     export ARTIST_INITIALIZED=true
+    if ! [[ -d $ROOT/artist/__data__/$ARTIST_FONT ]]; then
+        print_err "artist font not available '$ARTIST_FONT'"
+        exit 1
+    fi
+    export SYMBOL_FILE="$ROOT/artist/__data__/$ARTIST_FONT/symbols.data"
 }
 
 function __load_symbols__(){
@@ -102,14 +107,6 @@ function draw_err() {
     if $ENABLE_LOGGING; then
         log_err "[art] $1"
     fi
-}
-
-function enable_autonewline() {
-    END_WITH_NEWLINE=true
-}
-
-function disable_autonewline() {
-    END_WITH_NEWLINE=false
 }
 
 function enable_logging(){
