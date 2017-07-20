@@ -121,10 +121,11 @@ if [[ "$headline" =~ ^\#arg_count=([0-9]*):([0-9]*)$ ]]; then
         max='-'
     fi
     validate_arg_count $min $max $CMD_ARG_COUNT
-    if [[ $? == 1 ]]; then
+    RETURN_CODE="$?"
+    if [[ "$RETURN_CODE" == 1 ]]; then
         print_err "insufficient number of  input arguments provided for '$CMD' command. minimum expected $min, provided $CMD_ARG_COUNT"
         exit -1
-    elif [[ $? == 2 ]]; then
+    elif [[ "$RETURN_CODE" == 2 ]]; then
         print_err "exceeding number of input arguments provided for '$CMD' command. maximum expected $max, provided $CMD_ARG_COUNT"
         exit -1
     fi
