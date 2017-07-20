@@ -52,10 +52,12 @@ function __print__(){
 
 # public functions
 function print_dbg() {
-    __print_clr__ "$DBG_CLR"
-    __print_tag__ "$DBG_TAG"
-    __print__ "$1"
-    __print_clr__ "$RST_CLR"
+    if $DEBUG_MODE; then
+        __print_clr__ "$DBG_CLR"
+        __print_tag__ "$DBG_TAG"
+        __print__ "$1"
+        __print_clr__ "$RST_CLR"
+    fi
     if $ENABLE_LOGGING; then
         log_dbg "[term] $1"
     fi
