@@ -37,7 +37,7 @@ function draw_ascii(){
                 index=$(($(($row * ${ALPHABET_BLOCK_WIDTH[$sym_ascii]}))+$col))
                 symbol=${ALPHABET[$sym_ascii]}
                 char="${symbol:$index:1}"
-                echo -n "${char/\#/ }"
+                echo -n "${char/\./ }"
             done
         done
         echo ""
@@ -48,11 +48,17 @@ function draw_text(){
     for (( i=0; i<${#1}; i++)); do
         l[$i]=$(printf '%d\n' "'${1:i:1}")
     done
-    draw_ascii ${l[@]}
+    draw_ascii ${l[@]:0:${#1}}
 }
 
-load_symbols 'upper.data'
-load_symbols 'lower.data'
+load_symbols 'all_symbols.data'
 
-draw_text "sumudu"
-draw_text "Hello World"
+draw_text "abcdefghijklm"
+draw_text "nopqrstuvwxyz"
+
+draw_text "ABCDEFGHIJKLM"
+draw_text "NOPQRSTUVWXYZ"
+
+draw_text "0123456789"
+
+draw_text "!@#$%^&*()"
