@@ -52,6 +52,32 @@ JustBash functions include,
 JustBash macros,
  - macro to validate user defined scripts input argument count
 
+## How to implement a new JustBash script
+Create the new script inside the tools directory. 
+
+e.g.
+``` sh
+vi tools/my_script.sh
+```
+
+> Note that every script must have '.sh' extension
+> When calling through JustBash, call without the extension
+
+sample content.
+``` sh
+#arg_count=1:3
+print_inf "My First JustBash script"
+draw_txt "Hello World!"
+print_wrn "input arguments: " $*
+
+```
+
+Invoke the new script through JustBash as below.
+
+```
+$ ./main.sh -i test_instance -c my_script arg_1 arg_2
+```
+
 ## Todos
 
 Following features will be available soon.
