@@ -17,8 +17,8 @@ function __init__(){
     source $ROOT/terminal/main.sh
     source $ROOT/parser/main.sh
     if $LOAD_ARTIST; then
-        print_dbg "artist loaded!"
         source $ROOT/artist/main.sh
+        print_dbg "artist loaded"
     fi
 }
 
@@ -104,7 +104,7 @@ if ! [[ -f $CMD_PATH ]]; then
 fi
 
 print_dbg "command '$CMD' is about to be invoked with args '$CMD_ARGS'"
-print_dbg "parsing argument count"
+print_dbg "validating argument count"
 headline=$(head -n 1 $ROOT/tools/$CMD.sh)
 if [[ "$headline" =~ ^\#arg_count=([0-9]*):([0-9]*)$ ]]; then
     min="${BASH_REMATCH[1]}"
