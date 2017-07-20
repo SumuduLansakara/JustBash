@@ -12,10 +12,8 @@
 ```
                                     
 
-# JustBash
-
-## Introduction
-JustBash is a highly customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, argument validating etc...
+## What is JustBash?
+JustBash is a highly customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, argument validation etc...
 
 Users can implement custom scripts for performing whatever task that can be done through bash and invoke them through JustBash. JustBash provides a set of simple and convinient functions for displaying messages, logging etc...
 
@@ -25,9 +23,9 @@ JustBash can be used in any Linux environment. It does not require any additiona
 ## Usage
 JustBash main script is invoked with the name of the desired JustBash command, instance ID and other required arguments (command-line arguments for the JustBash script, debug flags etc..). Then from inside it will perform initial validations and invoke the requested script.
 
-e.g. Asuming the environment variable `$JustBash` points to the JustBash root directory,
+e.g. 
 ``` sh
-    $ $JustBash/main.sh -i test_instance_1 -c test
+    $ ./main.sh -i test_instance_1 -c test
 ```
 
 ### Instance ID
@@ -48,6 +46,7 @@ JustBash provides a set of functions and macros users can use from inside the Ju
 
 JustBash functions include,
  - functions to display messages with different error levels
+ - functions to display word-arts
  - logging functions to log messages with different error levels
 
 JustBash macros,
@@ -55,7 +54,7 @@ JustBash macros,
 
 ## Todos
 
-Following features are will be available soon.
+Following features will be available soon.
 
  - ability to re-write lines
 
