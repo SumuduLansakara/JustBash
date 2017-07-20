@@ -31,7 +31,6 @@ function load_symbols(){
 }
 
 function draw_ascii(){
-    unset IFS
     for row in $(seq 0 $(($symbol_height-1))); do
         for sym_ascii in $*; do
             for col in $(seq 0 $((${ALPHABET_WIDTH[$sym_ascii]}-1))); do
