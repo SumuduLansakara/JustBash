@@ -17,13 +17,6 @@ function __init__(){
         export ERR_CLR=
         export RST_CLR=
     fi
-    if ! $DISPLAY_TAGS; then
-        export DBG_TAG=
-        export TXT_TAG=
-        export INF_TAG=
-        export WRN_TAG=
-        export ERR_TAG=
-    fi
     if ! $ENABLE_LOGGER; then
         export ENABLE_TERM_LOGGING=false
     fi
@@ -34,7 +27,9 @@ function __print_clr__(){
 }
 
 function __print_tag__(){
-    echo -n "$1"
+    if $ENABLE_TAGS; then
+        echo -n "$1"
+    fi
 }
 
 function __print__(){
@@ -164,6 +159,14 @@ function disable_cursor(){
     echo -ne "\033[?25l"
 }
 
+function enable_print_tags(){
+    export ENABLE_TAGS=true
+}
+
+function disable_print_tags(){
+    export ENABLE_TAGS=false
+}
+
 # entry point
 __init__
 export -f __print_clr__
@@ -176,6 +179,8 @@ export -f enable_term_logging
 export -f disable_term_logging
 export -f enable_rewrite
 export -f disable_rewrite
+export -f enable_print_tags
+export -f disable_print_tags
 
 
 export -f clear_prev_line

@@ -1,17 +1,4 @@
 #arg_count=:3
-enable_rewrite
-print_wrn "line1"
-sleep 0.2
-print_wrn "line2"
-sleep 0.2
-print_wrn "line3"
-sleep 0.2
-print_wrn "line4"
-sleep 0.2
-print_wrn "line5"
-sleep 0.2
-disable_rewrite
-
 # terminal test
 print_inf "test command started"
 print_wrn "number of arguments recieved: ${#*}"
@@ -27,9 +14,17 @@ log_inf "direct logging from command"
 draw_inf "JustBash Artist!"
 draw_txt "Input>> '$*'"
 
-# progress
+# rewriting test
+disable_print_tags
+enable_rewrite
+for i in {0..100}; do
+    print_txt "progress $(printf '%02d' $i) %"
+    sleep 0.2
+done
+disable_rewrite
+enable_print_tags
 
-# rewriter test
+# print utils test
 disable_cursor
 echo "progress demo:"
 echo
@@ -37,7 +32,7 @@ for i in {0..100}; do
     clear_prev_line
     print_progress $i 100
     echo
-    sleep 0.1
+    sleep 0.05
 done
 enable_cursor
 
