@@ -104,7 +104,10 @@ function print_err() {
 }
 
 function print_tool_output(){
+    print_dbg "start printing and logging command output"
+    disable_autonewline
     __print__ "$1"
+    enable_autonewline
     if $ENABLE_LOGGING; then
         __log__ "[stdout][bgn]"
         disable_log_timestamp
@@ -112,6 +115,7 @@ function print_tool_output(){
         enable_log_timestamp
         __log__ "[stdout][end]"
     fi
+    print_dbg "end printing and logging command output"
 }
 
 function enable_autonewline() {
