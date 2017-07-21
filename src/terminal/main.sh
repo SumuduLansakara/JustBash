@@ -58,6 +58,9 @@ function print_dbg() {
 }
 
 function print_txt() {
+    if $ENABLE_REWRITE; then
+        clear_prev_line
+    fi
     __print_clr__ "$TXT_CLR"
     __print_tag__ "$TXT_TAG"
     __print__ "$1"
@@ -68,6 +71,9 @@ function print_txt() {
 }
 
 function print_inf() {
+    if $ENABLE_REWRITE; then
+        clear_prev_line
+    fi
     __print_clr__ "$INF_CLR"
     __print_tag__ "$INF_TAG"
     __print__ "$1"
@@ -78,6 +84,9 @@ function print_inf() {
 }
 
 function print_wrn() {
+    if $ENABLE_REWRITE; then
+        clear_prev_line
+    fi
     __print_clr__ "$WRN_CLR"
     __print_tag__ "$WRN_TAG"
     __print__ "$1"
@@ -88,6 +97,9 @@ function print_wrn() {
 }
 
 function print_err() {
+    if $ENABLE_REWRITE; then
+        clear_prev_line
+    fi
     __print_clr__ "$ERR_CLR"
     __print_tag__ "$ERR_TAG"
     __print__ "$1"
@@ -113,21 +125,44 @@ function print_tool_output(){
 }
 
 function enable_autonewline() {
-    END_WITH_NEWLINE=true
+    export END_WITH_NEWLINE=true
 }
 
 function disable_autonewline() {
-    END_WITH_NEWLINE=false
+    export END_WITH_NEWLINE=false
 }
 
 function enable_term_logging(){
-    ENABLE_TERM_LOGGING=true
+    export ENABLE_TERM_LOGGING=true
 }
 
 function disable_term_logging(){
-    ENABLE_TERM_LOGGING=false
+    export ENABLE_TERM_LOGGING=false
 }
 
+function enable_rewrite(){
+    export ENABLE_REWRITE=true
+}
+
+function disable_rewrite(){
+    export ENABLE_REWRITE=false
+}
+
+function clear_screen(){
+    echo -ne '\033[2J\033[0;0f'
+}
+
+function clear_prev_line(){
+    echo -ne '\033[1A\033[2K'
+}
+
+function enable_cursor(){
+    echo -ne "\033[?25h"
+}
+
+function disable_cursor(){
+    echo -ne "\033[?25l"
+}
 
 # entry point
 __init__
@@ -139,6 +174,14 @@ export -f enable_autonewline
 export -f disable_autonewline
 export -f enable_term_logging
 export -f disable_term_logging
+export -f enable_rewrite
+export -f disable_rewrite
+
+
+export -f clear_prev_line
+export -f clear_screen
+export -f enable_cursor
+export -f disable_cursor
 
 export -f print_dbg
 export -f print_txt

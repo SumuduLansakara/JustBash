@@ -43,16 +43,14 @@ function __init__(){
             draw_inf "----------"
         fi
     fi
-    # load rewriter
-    if $ENABLE_REWRITER; then
-        . $ROOT/rewriter/main.sh
-        if [[ $? -ne 0 ]]; then
-            print_wrn "errors occured while loading rewriter"
-        fi
-    fi
 
     # load arg parser
     . $ROOT/parser/main.sh
+
+    # load print utilities
+    if $ENABLE_PRINTUTILS; then
+        . print_utils/main.sh
+    fi
 
     # check tool directory available
     if ! [[ -d $TOOLDIR ]]; then
