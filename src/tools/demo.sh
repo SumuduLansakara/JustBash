@@ -1,25 +1,25 @@
 #arg_count=:3
-# terminal test
-print_inf "test command started"
+# terminal demo
+print_inf "demo command started"
 print_wrn "number of arguments recieved: ${#*}"
 
-# direct echo test
+# direct echo demo
 echo ">>> directly echoed message without using terminal methods <<<"
 echo ">>> directly printing to stderr <<<" >&2
 
-# logger test
+# logger demo
 log_inf "direct logging from command"
 
-# artist test
+# artist demo
 draw_inf "JustBash Artist!"
 draw_wrn "Input>> '$*'"
 
-# toggle color test
+# toggle color demo
 disable_colors
 print_inf "info message with colors disabled"
 enable_colors
 
-# rewriting test
+# rewriting demo
 echo "[placeholder] this line gets re-written"
 disable_print_tags
 enable_rewrite
@@ -30,7 +30,7 @@ done
 disable_rewrite
 enable_print_tags
 
-# print utils test
+# print utils demo
 disable_cursor
 echo "progress demo:"
 echo "[placeholder] this line gets re-written"
@@ -46,6 +46,6 @@ set_color $RST_CLR
 enable_cursor
 
 
-# error code handeling test
+# error code handeling demo
 print_err "returning with fake error 123"
 exit 123

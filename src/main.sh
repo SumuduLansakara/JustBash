@@ -130,7 +130,7 @@ function validate_command(){
     fi
     CMD_PATH="$TOOLDIR/$CMD.sh"
     if ! [[ -e "$CMD_PATH" ]]; then
-        print_err "'$CMD.sh' script not found"
+        print_err "'$CMD.sh' script not found in '$TOOLDIR'"
         exit 1
     fi
     if ! [[ -f $CMD_PATH ]]; then
