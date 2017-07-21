@@ -7,23 +7,43 @@ function __init__(){
 
     if [[ -z $INSTANCEID ]]; then
         if ! $DEBUG_MODE; then
-            echo "[ERR][MAIN] instance ID not provided"
+            echo "[ERR] instance ID not provided"
             exit 1
         fi
         export INSTANCEID="DEBUG"
         echo "[DBG] starting debug instance: $INSTANCEID"
     fi
 
+    # load logger
+    if $ENABLE_LOGGER; then
+        . $ROOT/logger/main.sh
+        if [[ $? -ne 0 ]]; then
+            echo "[WRN] errors occured while loading logger"
+        fi
+        log_inf "JustBash logger started"
+    fi
+    # load terminal
     source $ROOT/terminal/main.sh
-    source $ROOT/parser/main.sh
-    if $LOAD_ARTIST; then
-        source $ROOT/artist/main.sh
+    # load artist
+    if $ENABLE_ARTIST; then
+        . $ROOT/artist/main.sh
+        if [[ $? -ne 0 ]]; then
+            echo "[WRN] errors occured while loading logger"
+        fi
         print_dbg "artist loaded"
         if $ENABLE_WELCOME_BANNER; then
             draw_inf "Welcome to"
             draw_inf " JustBash!"
             draw_inf "----------"
         fi
+    fi
+    # load arg parser
+    source $ROOT/parser/main.sh
+
+    if ! $ENABLE_LOGGER; then
+        print_wrn "************************************************************"
+        print_wrn "*** LOGGING DISABLED! THIS INSTANCE WILL NOT BE LOGGED!! ***"
+        print_wrn "************************************************************"
     fi
 }
 

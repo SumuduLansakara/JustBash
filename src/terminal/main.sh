@@ -24,14 +24,8 @@ function __init__(){
         export WRN_TAG=
         export ERR_TAG=
     fi
-    if $ENABLE_LOGGING; then
-        disable_logging
-        print_dbg "logging enabled"
-        enable_logging
-        . $ROOT/logger/main.sh
-        if [[ $? -ne 0 ]]; then
-            print_err "errors occured while sourcing logger"
-        fi
+    if ! $ENABLE_LOGGER; then
+        export ENABLE_TERM_LOGGING=false
     fi
 }
 
@@ -58,7 +52,7 @@ function print_dbg() {
         __print__ "$1"
         __print_clr__ "$RST_CLR"
     fi
-    if $ENABLE_LOGGING; then
+    if $ENABLE_TERM_LOGGING; then
         log_dbg "[term] $1"
     fi
 }
@@ -68,7 +62,7 @@ function print_txt() {
     __print_tag__ "$TXT_TAG"
     __print__ "$1"
     __print_clr__ "$RST_CLR"
-    if $ENABLE_LOGGING; then
+    if $ENABLE_TERM_LOGGING; then
         log_txt "[term] $1"
     fi
 }
@@ -78,7 +72,7 @@ function print_inf() {
     __print_tag__ "$INF_TAG"
     __print__ "$1"
     __print_clr__ "$RST_CLR"
-    if $ENABLE_LOGGING; then
+    if $ENABLE_TERM_LOGGING; then
         log_inf "[term] $1"
     fi
 }
@@ -88,7 +82,7 @@ function print_wrn() {
     __print_tag__ "$WRN_TAG"
     __print__ "$1"
     __print_clr__ "$RST_CLR"
-    if $ENABLE_LOGGING; then
+    if $ENABLE_TERM_LOGGING; then
         log_wrn "[term] $1"
     fi
 }
@@ -98,7 +92,7 @@ function print_err() {
     __print_tag__ "$ERR_TAG"
     __print__ "$1"
     __print_clr__ "$RST_CLR"
-    if $ENABLE_LOGGING; then
+    if $ENABLE_TERM_LOGGING; then
         log_err "[term] $1"
     fi
 }
@@ -108,7 +102,7 @@ function print_tool_output(){
     disable_autonewline
     __print__ "$1"
     enable_autonewline
-    if $ENABLE_LOGGING; then
+    if $ENABLE_TERM_LOGGING; then
         __log__ "[stdout][bgn]"
         disable_log_timestamp
         __log__ "$1"
@@ -126,12 +120,12 @@ function disable_autonewline() {
     END_WITH_NEWLINE=false
 }
 
-function enable_logging(){
-    ENABLE_LOGGING=true
+function enable_term_logging(){
+    ENABLE_TERM_LOGGING=true
 }
 
-function disable_logging(){
-    ENABLE_LOGGING=false
+function disable_term_logging(){
+    ENABLE_TERM_LOGGING=false
 }
 
 
@@ -143,8 +137,8 @@ export -f __print__
 
 export -f enable_autonewline
 export -f disable_autonewline
-export -f enable_logging
-export -f disable_logging
+export -f enable_term_logging
+export -f disable_term_logging
 
 export -f print_dbg
 export -f print_txt
