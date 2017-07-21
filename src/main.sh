@@ -45,6 +45,12 @@ function __init__(){
         print_wrn "*** LOGGING DISABLED! THIS INSTANCE WILL NOT BE LOGGED!! ***"
         print_wrn "************************************************************"
     fi
+
+    # check tool directory available
+    if ! [[ -d $TOOLDIR ]]; then
+        print_err "tools directory '$TOOLDIR' not available"
+        exit 1
+    fi
 }
 
 function __argparse__(){
@@ -110,53 +116,33 @@ function __help__(){
     echo "  -h                : display this help message"
 }
 
+function execute(){
+    # parse and validate command
+    if [[ -z "$CMD" ]]; then
+        print_err "no command provided"
+        exit 1
+    fi
+    CMD_PATH="$TOOLDIR/$CMD.sh"
+    if ! [[ -e "$CMD_PATH" ]]; then
+        print_err "'$CMD.sh' script not found"
+        exit 1
+    fi
+    if ! [[ -f $CMD_PATH ]]; then
+        print_err "invalid file found for '$CMD' at '$CMD_PATH'"
+        exit 1
+    fi
+}
+
 # execute
 __init__ $*
 
-# parse and validate command
-if [[ -z $CMD ]]; then
-    print_err "no command provided"
-    exit 1
-fi
-CMD_PATH=$ROOT/tools/$CMD.sh
-if ! [[ -e $CMD_PATH ]]; then
-    print_err "$CMD command not found"
-    exit 1
-fi
-if ! [[ -f $CMD_PATH ]]; then
-    print_err "invalid file found for $CMD at $CMD_PATH"
-    exit 1
-fi
 
 print_dbg "command '$CMD' is about to be invoked with args '$CMD_ARGS'"
-print_dbg "validating argument count"
-headline=$(head -n 1 $ROOT/tools/$CMD.sh)
-if [[ "$headline" =~ ^\#arg_count=([0-9]*):([0-9]*)$ ]]; then
-    min="${BASH_REMATCH[1]}"
-    max="${BASH_REMATCH[2]}"
-    if [[ -z $min ]]; then
-        min='-'
-    fi
-    if [[ -z $max ]]; then
-        max='-'
-    fi
-    validate_arg_count $min $max $CMD_ARG_COUNT
-    RETURN_CODE="$?"
-    if [[ "$RETURN_CODE" == 1 ]]; then
-        print_err "insufficient number of  input arguments provided for '$CMD' command. minimum expected $min, provided $CMD_ARG_COUNT"
-        exit -1
-    elif [[ "$RETURN_CODE" == 2 ]]; then
-        print_err "exceeding number of input arguments provided for '$CMD' command. maximum expected $max, provided $CMD_ARG_COUNT"
-        exit -1
-    fi
-    print_dbg "argument count valid. '$CMD_ARG_COUNT' provided, expected [$min:$max]"
-else
-    print_dbg "argument counts are not defined for '$CMD' command"
-fi
+validate_arg_count "$TOOLDIR/$CMD.sh" "$CMD_ARG_COUNT"
 
 # invoke command
 print_dbg "invking command '$CMD'"
-output=$(bash $ROOT/tools/$CMD.sh $CMD_ARGS 2>&1)
+output=$(bash $TOOLDIR/$CMD.sh $CMD_ARGS 2>&1)
 CMD_ERR="$?"
 print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
 print_tool_output "$output"

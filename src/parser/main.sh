@@ -12,24 +12,40 @@ function __init__()
 }
 
 function validate_arg_count(){
-    # $1: min arg count
-    # $2: max arg count
-    # $3: recieved arg count
-    # return 1 if not enough arguments are not provided
-    # return 2 if exceeding number of arguments are provided
+    # $1: script path
+    # $2: received arg count
+    # return 0 => valid argument count received
+    # return 1 => metadata required for argument validation not available
 
-    if [[ $1 != '-' ]]; then
-        if [[ $3 < $1 ]]; then
-            return 1
+    print_dbg "start argument count validation"
+    headline=$(head -n 1 "$1")
+    if [[ "$headline" =~ ^\#arg_count=([0-9]*):([0-9]*)$ ]]; then
+        min="${BASH_REMATCH[1]}"
+        max="${BASH_REMATCH[2]}"
+        if [[ -z $min ]]; then
+            min='0'
         fi
-    fi
-    if [[ $2 != '-' ]]; then
-        if [[ $3 > $2 ]]; then
-            return 2
+        if [[ -z $max ]]; then
+            max='99'
         fi
+        if [[ $min -gt $max ]]; then
+            print_err "expected argument count range is invalid. expected min ($min) > expected max ($max)"
+            exit 1
+        fi
+        if [[ $2 -lt $min ]]; then
+            print_err "insufficient number of arguments provided. received ($2) < expected min ($min)" 
+            exit 1
+        fi
+        if [[ $2 -gt $max ]]; then
+            print_err "exceeding number of arguments provided. received ($2) > expected max ($max)"
+            exit 1
+        fi
+        print_dbg "argument count valid. '$2' provided, expected [$min:$max]"
+        return 0
     fi
+    print_wrn "metadata required for argument count validation not available"
+    return 1
 }
-
 
 # entry point
 __init__
