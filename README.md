@@ -13,7 +13,7 @@
                                     
 
 ## What is JustBash?
-JustBash is a highly customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, argument validation etc...
+JustBash is a highly customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, input validation etc...
 
 Users can implement custom scripts for performing whatever task that can be done through bash and invoke them through JustBash. JustBash provides a set of simple and convinient functions for displaying messages, logging etc...
 
@@ -44,10 +44,13 @@ JustBash scripts are implemented by the user. A JustBash script is an ordinary b
 ## JustBash Features
 JustBash provides a set of functions and macros users can use from inside the JustBash script they are developing.
 
-JustBash functions include,
+JustBash provides,
  - functions to display messages with different error levels
  - functions to display word-arts
  - logging functions to log messages with different error levels
+ - ability to re-write lines (useful when displaying progress)
+ - utility class with convenient functions for displaying complex outputs
+ - ability to change display colors and other terminal manipulations
 
 JustBash macros,
  - macro to validate user defined scripts input argument count
@@ -60,8 +63,8 @@ e.g.
 vi tools/my_script.sh
 ```
 
-> Note that every script must have '.sh' extension
-> When calling through JustBash, call without the extension
+> Note that every script must have '.sh' extension.
+> When calling through JustBash, call without the extension.
 
 sample content.
 ``` sh
@@ -78,12 +81,7 @@ Invoke the new script through JustBash as below.
 $ ./main.sh -i test_instance -c my_script arg_1 arg_2
 ```
 
-## Todos
-
-Following features will be available soon.
-
- - ability to re-write lines
-
+> Refer to the already implemented demo command for sample usage
 
 License
 ----
