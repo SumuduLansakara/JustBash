@@ -16,5 +16,5 @@ draw_inf "JustBash Artist!"
 draw_txt "Input>> '$*'"
 
 # error code handeling test
-print_err "returning with fake error"
-exit -1
+print_err "returning with fake error 123"
+exit 123
