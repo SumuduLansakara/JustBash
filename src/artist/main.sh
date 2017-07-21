@@ -24,8 +24,16 @@ function __init__(){
 }
 
 function __load_symbols__(){
+    # Loads the `ALPHABET` array from the currently pointed `SYMBOL_FILE`.
+    # Symbol details must be provided inside the METADATA section.
+    # Symbol definitions must start just after the METADATA section in the 
+    #  incremental order of the ascii code
+    # Since Bash currently does not support exporting arrays, symbols are loaded
+    #  and kept locally for each subshell
+
     for line in $(sed -n '/#>METADATA_BEGIN/,/#>METADATA_END/p' "$SYMBOL_FILE"); do
         if [[ $line =~ ^#\>BLOCK_WIDTH=([0-9]*)$ ]]; then
+            # actual_block_width = visible_width + 1 (for newline charactor)
             export block_width="$((${BASH_REMATCH[1]}+1))" 
         elif [[ $line =~ ^#\>SYMBOL_HEIGHT=([0-9]*)$ ]]; then
             export symbol_height="${BASH_REMATCH[1]}"
@@ -42,6 +50,8 @@ function __load_symbols__(){
     symbol_start_line=$(($(sed -n '/#>METADATA_END/=' "$SYMBOL_FILE") + 1))
     symbol_end_line=$(($(($symbol_count * $(($symbol_height+1))))+1))
 
+    # Why incrementing symbol_height and sym_beg below?
+    # > This is to ignore the symbol `WIDTH` metadata line present on top of each symbol
     for sym_beg in $(seq $symbol_start_line $(($symbol_height+1)) $symbol_end_line); do
         ALPHABET[$start_ascii]=$(sed -n "$(($sym_beg+1)),$(($sym_beg+$symbol_height))p" "$SYMBOL_FILE")
         ALPHABET_WIDTH[$start_ascii]=$(sed -n "${sym_beg}s/.*WIDTH=\([0-9]*\).*/\1/p" "$SYMBOL_FILE")
@@ -50,8 +60,14 @@ function __load_symbols__(){
 }
 
 function __draw_ascii__(){
+    # $*: ascii codes to be drawn
+    # Actual drawing happens here by picking symbols from the `ALPHABET` array and 
+    #  drawing them row by row.
+    # This does not handle display-terminal width overflaws, 
+    # User must properly handle the lengths considering current display-terminal size.
+
     if ! [[ -v ALPHABET[@] ]]; then
-        __load_symbols__ 
+        __load_symbols__
     fi
     for row in $(seq 0 $(($symbol_height-1))); do
         for sym_ascii in $*; do
@@ -67,6 +83,10 @@ function __draw_ascii__(){
 }
 
 function __draw_text__(){
+    # $1: text to be drawn
+    # Convert the charactors into ascii codes and pass them as a list 
+    #  of args to `__draw_ascii__` method
+
     for (( i=0; i<${#1}; i++)); do
         l[$i]=$(printf '%d\n' "'${1:i:1}")
     done
@@ -112,9 +132,9 @@ function draw_err() {
 
 # entry point
 __init__
-export -f __draw_text__
-export -f __draw_ascii__
 export -f __load_symbols__
+export -f __draw_ascii__
+export -f __draw_text__
 
 export -f draw_txt
 export -f draw_inf
