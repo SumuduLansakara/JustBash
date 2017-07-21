@@ -95,36 +95,36 @@ function __draw_text__(){
 
 # public functions
 function draw_txt() {
-    __print_clr__ "$TXT_CLR"
+    set_color "$TXT_CLR"
     __draw_text__ "$1"
-    __print_clr__ "$RST_CLR"
+    set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
         log_txt "[art] $1"
     fi
 }
 
 function draw_inf() {
-    __print_clr__ "$INF_CLR"
+    set_color "$INF_CLR"
     __draw_text__ "$1"
-    __print_clr__ "$RST_CLR"
+    set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
         log_inf "[art] $1"
     fi
 }
 
 function draw_wrn() {
-    __print_clr__ "$WRN_CLR"
+    set_color "$WRN_CLR"
     __draw_text__ "$1"
-    __print_clr__ "$RST_CLR"
+    set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
         log_wrn "[art] $1"
     fi
 }
 
 function draw_err() {
-    __print_clr__ "$ERR_CLR"
+    set_color "$ERR_CLR"
     __draw_text__ "$1"
-    __print_clr__ "$RST_CLR"
+    set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
         log_err "[art] $1"
     fi

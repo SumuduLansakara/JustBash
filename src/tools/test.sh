@@ -35,12 +35,14 @@ disable_cursor
 echo "progress demo:"
 echo "[placeholder] this line gets re-written"
 MAX_PROGRESS=23
+set_color $INF_CLR
 for i in $(seq 0 $MAX_PROGRESS); do
     clear_prev_line
     print_progress $i $MAX_PROGRESS 100
     echo
     sleep 0.1
 done
+set_color $RST_CLR
 enable_cursor
 
 

@@ -14,12 +14,6 @@ function __init__(){
     fi
 }
 
-function __print_clr__(){
-    if $ENABLE_COLORS; then
-        echo -ne "\033[$1m"
-    fi
-}
-
 function __print_tag__(){
     if $ENABLE_TAGS; then
         echo -n "$1"
@@ -36,10 +30,10 @@ function __print__(){
 # public functions
 function print_dbg() {
     if $DEBUG_MODE; then
-        __print_clr__ "$DBG_CLR"
+        set_color "$DBG_CLR"
         __print_tag__ "$DBG_TAG"
         __print__ "$1"
-        __print_clr__ "$RST_CLR"
+        set_color "$RST_CLR"
     fi
     if $ENABLE_TERM_LOGGING; then
         log_dbg "[term] $1"
@@ -50,10 +44,10 @@ function print_txt() {
     if $ENABLE_REWRITE; then
         clear_prev_line
     fi
-    __print_clr__ "$TXT_CLR"
+    set_color "$TXT_CLR"
     __print_tag__ "$TXT_TAG"
     __print__ "$1"
-    __print_clr__ "$RST_CLR"
+    set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
         log_txt "[term] $1"
     fi
@@ -63,10 +57,10 @@ function print_inf() {
     if $ENABLE_REWRITE; then
         clear_prev_line
     fi
-    __print_clr__ "$INF_CLR"
+    set_color "$INF_CLR"
     __print_tag__ "$INF_TAG"
     __print__ "$1"
-    __print_clr__ "$RST_CLR"
+    set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
         log_inf "[term] $1"
     fi
@@ -76,10 +70,10 @@ function print_wrn() {
     if $ENABLE_REWRITE; then
         clear_prev_line
     fi
-    __print_clr__ "$WRN_CLR"
+    set_color "$WRN_CLR"
     __print_tag__ "$WRN_TAG"
     __print__ "$1"
-    __print_clr__ "$RST_CLR"
+    set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
         log_wrn "[term] $1"
     fi
@@ -89,10 +83,10 @@ function print_err() {
     if $ENABLE_REWRITE; then
         clear_prev_line
     fi
-    __print_clr__ "$ERR_CLR"
+    set_color "$ERR_CLR"
     __print_tag__ "$ERR_TAG"
     __print__ "$1"
-    __print_clr__ "$RST_CLR"
+    set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
         log_err "[term] $1"
     fi
@@ -112,6 +106,17 @@ function print_tool_output(){
     fi
     print_dbg "end printing and logging command output"
 }
+
+function set_color(){
+    if [[ $1 -gt 30 ]] && [[ $1 -lt 40 ]] || [[ $1 -eq 0 ]]; then
+        if $ENABLE_COLORS; then
+            echo -ne "\033[$1m"
+        fi
+        return
+    fi
+    print_wrn "invalid color code '$1'"
+}
+
 
 function enable_autonewline() {
     export END_WITH_NEWLINE=true
@@ -171,10 +176,10 @@ function disable_print_tags(){
 
 # entry point
 __init__
-export -f __print_clr__
 export -f __print_tag__
 export -f __print__
 
+export -f set_color
 export -f enable_autonewline
 export -f disable_autonewline
 export -f enable_term_logging
