@@ -13,16 +13,20 @@ function __init__(){
     fi
     export ARTIST_INITIALIZED=true
     if ! [[ -d $ROOT/artist/__data__/$ARTIST_FONT ]]; then
-        print_err "artist font not available '$ARTIST_FONT'"
+        print_err "no such artist font '$ARTIST_FONT'"
         exit 1
     fi
     export SYMBOL_FILE="$ROOT/artist/__data__/$ARTIST_FONT/symbols.data"
+    if ! [[ -f $SYMBOL_FILE ]]; then
+        print_err "symbol file not available for artist font '$ARTIST_FONT'"
+        exit 1
+    fi
 }
 
 function __load_symbols__(){
     for line in $(sed -n '/#>METADATA_BEGIN/,/#>METADATA_END/p' "$SYMBOL_FILE"); do
         if [[ $line =~ ^#\>BLOCK_WIDTH=([0-9]*)$ ]]; then
-            export block_width="${BASH_REMATCH[1]}"
+            export block_width="$((${BASH_REMATCH[1]}+1))" 
         elif [[ $line =~ ^#\>SYMBOL_HEIGHT=([0-9]*)$ ]]; then
             export symbol_height="${BASH_REMATCH[1]}"
         elif [[ $line =~ ^#\>START_ASCII=([0-9]*)$ ]]; then
@@ -41,7 +45,6 @@ function __load_symbols__(){
     for sym_beg in $(seq $symbol_start_line $(($symbol_height+1)) $symbol_end_line); do
         ALPHABET[$start_ascii]=$(sed -n "$(($sym_beg+1)),$(($sym_beg+$symbol_height))p" "$SYMBOL_FILE")
         ALPHABET_WIDTH[$start_ascii]=$(sed -n "${sym_beg}s/.*WIDTH=\([0-9]*\).*/\1/p" "$SYMBOL_FILE")
-        ALPHABET_BLOCK_WIDTH[$start_ascii]=$(($block_width+1))
         start_ascii=$(($start_ascii+1))
     done
 }
@@ -53,7 +56,7 @@ function __draw_ascii__(){
     for row in $(seq 0 $(($symbol_height-1))); do
         for sym_ascii in $*; do
             for col in $(seq 0 $((${ALPHABET_WIDTH[$sym_ascii]}-1))); do
-                index=$(($(($row * ${ALPHABET_BLOCK_WIDTH[$sym_ascii]}))+$col))
+                index=$(($(($row * $block_width))+$col))
                 symbol=${ALPHABET[$sym_ascii]}
                 char="${symbol:$index:1}"
                 echo -n "${char/\./ }"
