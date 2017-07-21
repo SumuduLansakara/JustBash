@@ -15,6 +15,9 @@ function validate_arg_count(){
     # $1: min arg count
     # $2: max arg count
     # $3: recieved arg count
+    # return 1 if not enough arguments are not provided
+    # return 2 if exceeding number of arguments are provided
+
     if [[ $1 != '-' ]]; then
         if [[ $3 < $1 ]]; then
             return 1
