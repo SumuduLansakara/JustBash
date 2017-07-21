@@ -4,6 +4,10 @@
 
 # private functions
 function __init__(){
+    if [[ -z $TERMINAL_INITIALIZED ]] || [[ "$TERMINAL_INITIALIZED" == "false" ]]; then
+        echo "[err][artist] terminal must be initialized before the artist"
+        exit 1
+    fi
     if $ARTIST_INITIALIZED; then
         return
     fi
@@ -59,16 +63,11 @@ function __draw_ascii__(){
     done
 }
 
-# public functions
 function __draw_text__(){
     for (( i=0; i<${#1}; i++)); do
         l[$i]=$(printf '%d\n' "'${1:i:1}")
     done
     __draw_ascii__ ${l[@]:0:${#1}}
-}
-
-function __print_clr__(){
-    echo -ne "\033[$1m"
 }
 
 # public functions
@@ -108,35 +107,13 @@ function draw_err() {
     fi
 }
 
-function enable_logging(){
-    ENABLE_LOGGING=true
-}
-
-function disable_logging(){
-    ENABLE_LOGGING=false
-}
-
-
 # entry point
 __init__
-export -f __print_clr__
 export -f __draw_text__
 export -f __draw_ascii__
 export -f __load_symbols__
-
-export -f enable_autonewline
-export -f disable_autonewline
-export -f enable_logging
-export -f disable_logging
 
 export -f draw_txt
 export -f draw_inf
 export -f draw_wrn
 export -f draw_err
-
-if [[ $1 == "DEBUG" ]]; then
-    print_txt "text message"
-    print_inf "info message"
-    print_wrn "warn message"
-    print_err "erro message"
-fi
