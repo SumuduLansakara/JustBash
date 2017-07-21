@@ -5,7 +5,7 @@
 # private functions
 function __init__(){
     if [[ -z $TERMINAL_INITIALIZED ]] || [[ "$TERMINAL_INITIALIZED" == "false" ]]; then
-        echo "[err][artist] terminal must be initialized before the artist"
+        echo "[err][artist] JustBash terminal must be initialized before the artist"
         exit 1
     fi
     if $ARTIST_INITIALIZED; then

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 export ROOT="$(dirname $0)"
-source $ROOT/settings.sh
+. $ROOT/settings.sh
 
 function __init__(){
     __argparse__ $*
@@ -23,12 +23,18 @@ function __init__(){
         log_inf "JustBash logger started"
     fi
     # load terminal
-    source $ROOT/terminal/main.sh
+    . $ROOT/terminal/main.sh
+    if ! $ENABLE_LOGGER; then
+        print_wrn "************************************************************"
+        print_wrn "*** LOGGING DISABLED! THIS INSTANCE WILL NOT BE LOGGED!! ***"
+        print_wrn "************************************************************"
+    fi
+
     # load artist
     if $ENABLE_ARTIST; then
         . $ROOT/artist/main.sh
         if [[ $? -ne 0 ]]; then
-            echo "[WRN] errors occured while loading logger"
+            print_wrn "errors occured while loading artist"
         fi
         print_dbg "artist loaded"
         if $ENABLE_WELCOME_BANNER; then
@@ -37,14 +43,10 @@ function __init__(){
             draw_inf "----------"
         fi
     fi
-    # load arg parser
-    source $ROOT/parser/main.sh
-
-    if ! $ENABLE_LOGGER; then
-        print_wrn "************************************************************"
-        print_wrn "*** LOGGING DISABLED! THIS INSTANCE WILL NOT BE LOGGED!! ***"
-        print_wrn "************************************************************"
     fi
+
+    # load arg parser
+    . $ROOT/parser/main.sh
 
     # check tool directory available
     if ! [[ -d $TOOLDIR ]]; then
@@ -137,11 +139,18 @@ function execute_comand(){
     print_dbg "command '$CMD' is about to be invoked with args '$CMD_ARGS'"
     validate_arg_count "$TOOLDIR/$CMD.sh" "$CMD_ARG_COUNT"
 
-    print_dbg "invking command '$CMD'"
-    output=$(bash $TOOLDIR/$CMD.sh $CMD_ARGS 2>&1)
-    CMD_ERR="$?"
-    print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
-    print_tool_output "$output"
+    if $ENABLE_INTERACTIVE_MODE; then
+        print_dbg "invking command in the same shell"
+        bash $TOOLDIR/$CMD.sh $CMD_ARGS
+        CMD_ERR="$?"
+        print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
+    else
+        print_dbg "invking command in a sub-shell"
+        output=$(bash $TOOLDIR/$CMD.sh $CMD_ARGS 2>&1)
+        CMD_ERR="$?"
+        print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
+        print_tool_output "$output"
+    fi
     if [[ $CMD_ERR -ne 0 ]]; then
         print_err "$CMD returned with error $CMD_ERR"
     fi
