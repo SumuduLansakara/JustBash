@@ -34,9 +34,10 @@ enable_print_tags
 disable_cursor
 echo "progress demo:"
 echo "[placeholder] this line gets re-written"
-for i in {0..10}; do
+MAX_PROGRESS=23
+for i in $(seq 0 $MAX_PROGRESS); do
     clear_prev_line
-    print_progress $i 10
+    print_progress $i $MAX_PROGRESS 100
     echo
     sleep 0.1
 done

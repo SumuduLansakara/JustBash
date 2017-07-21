@@ -1,14 +1,17 @@
 function print_progress(){
     # $1: current progress value
     # $2: max progress value
+    # $3: progress width
+
     echo -n '['
-    if [[ $1 -gt 0 ]]; then
-        printf '#%.0s' $(seq 1 $1)
-    fi
-    if [[ $2 -gt $1 ]]; then
-        printf -- '-%.0s' $(seq 1 $(($2 - $1)))
-    fi
-    echo -n ']'
+    for j in $(seq 1 $3); do
+        if [[ $(($1 * $3 / $2)) -lt $j ]]; then
+            echo -n '-'
+        else
+            echo -n '#'
+        fi
+    done
+    echo -n "] $(printf '%2s' $(($1 * 100 / $2)) %)"
 }
 
 export -f print_progress
