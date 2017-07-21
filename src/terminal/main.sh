@@ -9,21 +9,15 @@ function __init__(){
     fi
     export TERMINAL_INITIALIZED=true
 
-    if ! $ENABLE_COLORS; then
-        export DBG_CLR=
-        export TXT_CLR=
-        export INF_CLR=
-        export WRN_CLR=
-        export ERR_CLR=
-        export RST_CLR=
-    fi
     if ! $ENABLE_LOGGER; then
         export ENABLE_TERM_LOGGING=false
     fi
 }
 
 function __print_clr__(){
-    echo -ne "\033[$1m"
+    if $ENABLE_COLORS; then
+        echo -ne "\033[$1m"
+    fi
 }
 
 function __print_tag__(){
@@ -159,6 +153,14 @@ function disable_cursor(){
     echo -ne "\033[?25l"
 }
 
+function enable_colors(){
+    export ENABLE_COLORS=true
+}
+
+function disable_colors(){
+    export ENABLE_COLORS=false
+}
+
 function enable_print_tags(){
     export ENABLE_TAGS=true
 }
@@ -179,6 +181,8 @@ export -f enable_term_logging
 export -f disable_term_logging
 export -f enable_rewrite
 export -f disable_rewrite
+export -f enable_colors
+export -f disable_colors
 export -f enable_print_tags
 export -f disable_print_tags
 
