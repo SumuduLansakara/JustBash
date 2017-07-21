@@ -136,7 +136,7 @@ fi
 
 # invoke command
 print_dbg "invking command '$CMD'"
-output=$(bash $ROOT/tools/$CMD.sh $CMD_ARGS)
+output=$(bash $ROOT/tools/$CMD.sh $CMD_ARGS 2>&1)
 CMD_ERR="$?"
 print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
 print_dbg "start printing and logging command output"
