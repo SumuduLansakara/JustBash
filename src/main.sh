@@ -116,7 +116,7 @@ function __help__(){
     echo "  -h                : display this help message"
 }
 
-function execute(){
+function validate_command(){
     # parse and validate command
     if [[ -z "$CMD" ]]; then
         print_err "no command provided"
@@ -133,19 +133,22 @@ function execute(){
     fi
 }
 
+function execute_comand(){
+    print_dbg "command '$CMD' is about to be invoked with args '$CMD_ARGS'"
+    validate_arg_count "$TOOLDIR/$CMD.sh" "$CMD_ARG_COUNT"
+
+    print_dbg "invking command '$CMD'"
+    output=$(bash $TOOLDIR/$CMD.sh $CMD_ARGS 2>&1)
+    CMD_ERR="$?"
+    print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
+    print_tool_output "$output"
+    if [[ $CMD_ERR -ne 0 ]]; then
+        print_err "$CMD returned with error $CMD_ERR"
+    fi
+}
+
 # execute
 __init__ $*
 
-
-print_dbg "command '$CMD' is about to be invoked with args '$CMD_ARGS'"
-validate_arg_count "$TOOLDIR/$CMD.sh" "$CMD_ARG_COUNT"
-
-# invoke command
-print_dbg "invking command '$CMD'"
-output=$(bash $TOOLDIR/$CMD.sh $CMD_ARGS 2>&1)
-CMD_ERR="$?"
-print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
-print_tool_output "$output"
-if [[ $CMD_ERR -ne 0 ]]; then
-    print_err "$CMD returned with error $CMD_ERR"
-fi
+validate_command
+execute_comand
