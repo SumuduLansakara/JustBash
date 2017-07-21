@@ -15,6 +15,16 @@ log_inf "direct logging from command"
 draw_inf "JustBash Artist!"
 draw_txt "Input>> '$*'"
 
+# rewriter test
+hide_cursor
+echo "progress demo:"
+echo
+for i in {0..10}; do
+    rewrite_txt $i
+    sleep 0.2
+done
+show_cursor
+
 # error code handeling test
 print_err "returning with fake error 123"
 exit 123

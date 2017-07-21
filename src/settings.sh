@@ -1,5 +1,6 @@
 export ENABLE_LOGGER=true
 export ENABLE_ARTIST=true
+export ENABLE_REWRITER=true
 
 export ENABLE_WELCOME_BANNER=true
 

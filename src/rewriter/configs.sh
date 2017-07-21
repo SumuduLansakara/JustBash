@@ -1,0 +1,1 @@
+export REWRITER_INITIALIZED=false
