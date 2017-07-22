@@ -7,4 +7,4 @@ export ENABLE_WELCOME_BANNER=true
 export ENABLE_INTERACTIVE_MODE=true
 
 export WORKDIR="$PWD"
-export TOOLDIR="$ROOT/tools"
+export SCRIPTDIR="$ROOT/../scripts"

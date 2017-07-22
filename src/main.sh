@@ -53,8 +53,8 @@ function __init__(){
     fi
 
     # check tool directory available
-    if ! [[ -d $TOOLDIR ]]; then
-        print_err "tools directory '$TOOLDIR' not available"
+    if ! [[ -d $SCRIPTDIR ]]; then
+        print_err "tools directory '$SCRIPTDIR' not available"
         exit 1
     fi
 }
@@ -128,9 +128,9 @@ function validate_command(){
         print_err "no command provided"
         exit 1
     fi
-    CMD_PATH="$TOOLDIR/$CMD.sh"
+    CMD_PATH="$SCRIPTDIR/$CMD.sh"
     if ! [[ -e "$CMD_PATH" ]]; then
-        print_err "'$CMD.sh' script not found in '$TOOLDIR'"
+        print_err "'$CMD.sh' script not found in '$SCRIPTDIR'"
         exit 1
     fi
     if ! [[ -f $CMD_PATH ]]; then
@@ -141,16 +141,16 @@ function validate_command(){
 
 function execute_comand(){
     print_dbg "command '$CMD' is about to be invoked with args '$CMD_ARGS'"
-    validate_arg_count "$TOOLDIR/$CMD.sh" "$CMD_ARG_COUNT"
+    validate_arg_count "$SCRIPTDIR/$CMD.sh" "$CMD_ARG_COUNT"
 
     if $ENABLE_INTERACTIVE_MODE; then
         print_dbg "invking command in the same shell"
-        bash $TOOLDIR/$CMD.sh $CMD_ARGS
+        bash $SCRIPTDIR/$CMD.sh $CMD_ARGS
         CMD_ERR="$?"
         print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
     else
         print_dbg "invking command in a sub-shell"
-        output=$(bash $TOOLDIR/$CMD.sh $CMD_ARGS 2>&1)
+        output=$(bash $SCRIPTDIR/$CMD.sh $CMD_ARGS 2>&1)
         CMD_ERR="$?"
         print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
         print_tool_output "$output"
