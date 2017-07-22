@@ -48,9 +48,9 @@ function __log__(){
         return
     fi
     if $ENABLE_LOG_TIMESTAMP; then
-        echo "$(date +'%y%m%d %H:%M:%S.%3N') $1" >> $LOGPATH
+        echo "$(date +'%y%m%d %H:%M:%S.%3N') $LOGTAG$1" >> $LOGPATH
     else
-        echo "$1" >> $LOGPATH
+        echo "$LOGTAG$1" >> $LOGPATH
     fi
 }
 

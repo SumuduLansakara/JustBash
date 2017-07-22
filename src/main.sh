@@ -67,7 +67,7 @@ function __argparse__(){
     fi
 
     # id, cmd, debug
-    SHORT_ARGS=i:c:dh
+    SHORT_ARGS=i:c:l:dh
 
     PARSED=$(getopt --options $SHORT_ARGS --name "$0" -- "$@")
     if [[ $? -ne 0 ]]; then
@@ -80,15 +80,19 @@ function __argparse__(){
     export DEBUG_MODE=false
     while true; do
         case "$1" in
-            -i|--id)
+            -i)
                 export INSTANCEID="$2"
                 shift 2
                 ;;
-            -c|--cmd)
+            -c)
                 CMD=$2
                 shift 2
                 ;;
-            -d|--debug)
+            -l)
+                export LOGTAG="$2 "
+                shift 2
+                ;;
+            -d)
                 export DEBUG_MODE=true
                 shift
                 ;;
@@ -113,10 +117,11 @@ function __argparse__(){
 
 function __help__(){
     echo "Usage:"
-    echo "  $0 [-i instance_id] [-c command_name] [-d] [-h] "
+    echo "  $0 [-i instance_id] [-l log_tag] [-c command_name] [-d] [-h] "
     echo ""
     echo "Options:"
-    echo "  -i <instance_id>  : MrBash instance id"
+    echo "  -i <instance_id>  : JustBash instance id"
+    echo "  -l <log_tag>      : optional tag to be used when logging current instance"
     echo "  -c <command_name> : command to be invoked"
     echo "  -d                : enable debug output"
     echo "  -h                : display this help message"

@@ -11,7 +11,6 @@
 	
 ```
                                     
-
 ## What is JustBash?
 JustBash is a highly customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, input validation etc...
 
@@ -26,6 +25,11 @@ JustBash main script is invoked with the name of the desired JustBash command, i
 e.g. 
 ``` sh
     $ ./main.sh -i test_instance_1 -c test
+```
+
+You can get usage syntax by invoking JustBash as below.
+``` sh
+    $ ./main.sh -h
 ```
 
 ### Instance ID
