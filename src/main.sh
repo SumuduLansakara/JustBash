@@ -20,7 +20,7 @@ function __init__(){
         if [[ $? -ne 0 ]]; then
             echo "[WRN] errors occured while loading logger"
         fi
-        log_inf "JustBash logger started"
+        log_inf "[***] JustBash logger started"
     fi
     # load terminal
     . $ROOT/terminal/main.sh

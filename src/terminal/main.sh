@@ -36,7 +36,7 @@ function print_dbg() {
         set_color "$RST_CLR"
     fi
     if $ENABLE_TERM_LOGGING; then
-        log_dbg "[term] $1"
+        log_dbg "[trm] $1"
     fi
 }
 
@@ -49,7 +49,7 @@ function print_txt() {
     __print__ "$1"
     set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
-        log_txt "[term] $1"
+        log_txt "[trm] $1"
     fi
 }
 
@@ -62,7 +62,7 @@ function print_inf() {
     __print__ "$1"
     set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
-        log_inf "[term] $1"
+        log_inf "[trm] $1"
     fi
 }
 
@@ -75,7 +75,7 @@ function print_wrn() {
     __print__ "$1"
     set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
-        log_wrn "[term] $1"
+        log_wrn "[trm] $1"
     fi
 }
 
@@ -88,7 +88,7 @@ function print_err() {
     __print__ "$1"
     set_color "$RST_CLR"
     if $ENABLE_TERM_LOGGING; then
-        log_err "[term] $1"
+        log_err "[trm] $1"
     fi
 }
 
