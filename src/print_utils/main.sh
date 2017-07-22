@@ -26,10 +26,40 @@ function print_progress(){
         fi
     done
     __print__ "] $(printf '%2s' $(($1 * 100 / $2)) %)"
-    enable_term_logging
+    enable_autonewline
+}
+
+function print_spinner(){
+    # $1: message
+    # $2: optional spin interval
+    # Animate a spinner until the last backgrounded process ends
+
+    if [[ -z $2 ]]; then
+        SPIN_INTERVAL=0.5
+    else
+        SPIN_INTERVAL=$2
+    fi
+    disable_autonewline
+    disable_cursor
+    __print__ "$1 "
+	_j=1
+	_chars='/-\|'
+	while true
+	do
+		printf "\b${_chars:_j++%${#_chars}:1}"
+        kill -0 $! &>/dev/null
+        if [[ $? -ne 0 ]]; then
+            printf "\b \n"
+            break
+        fi
+        sleep $SPIN_INTERVAL
+	done
+    enable_autonewline
+    enable_cursor
 }
 
 # entry point
 __init__
 
 export -f print_progress
+export -f print_spinner

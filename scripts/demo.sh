@@ -34,7 +34,7 @@ enable_print_tags
 disable_cursor
 echo "progress demo:"
 echo "[placeholder] this line gets re-written"
-MAX_PROGRESS=23
+MAX_PROGRESS=13
 set_color $INF_CLR
 for i in $(seq 0 $MAX_PROGRESS); do
     clear_prev_line
@@ -45,6 +45,12 @@ done
 set_color $RST_CLR
 enable_cursor
 
+# spinner demo
+# Use this to display a spinner for a process that takes a long time to complete
+# The process must be backgrounded while redirecting the output to /dev/null.
+# print_spinner method must be called before backgrounding any other process
+sleep 5 & &>/dev/null
+print_spinner "I'm going to dance for 5 secs.. " 0.5
 
 # error code handeling demo
 print_err "returning with fake error 123"
