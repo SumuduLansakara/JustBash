@@ -49,7 +49,7 @@ function __init__(){
 
     # load print utilities
     if $ENABLE_PRINTUTILS; then
-        . print_utils/main.sh
+        . $ROOT/print_utils/main.sh
     fi
 
     # check tool directory available
