@@ -20,7 +20,7 @@ function __init__(){
         if [[ $? -ne 0 ]]; then
             echo "[WRN] errors occured while loading logger"
         fi
-        log_inf "[***] JustBash logger started"
+        log_inf "[***] JustBash logger started [PID=$$]"
     fi
     # load terminal
     . $ROOT/terminal/main.sh
@@ -149,12 +149,12 @@ function execute_comand(){
     validate_arg_count "$SCRIPTDIR/$CMD.sh" "$CMD_ARG_COUNT"
 
     if $ENABLE_INTERACTIVE_MODE; then
-        print_dbg "invking command in the same shell"
+        print_dbg "invoking command in the same shell"
         bash $SCRIPTDIR/$CMD.sh $CMD_ARGS
         CMD_ERR="$?"
         print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
     else
-        print_dbg "invking command in a sub-shell"
+        print_dbg "invoking command in a sub-shell"
         output=$(bash $SCRIPTDIR/$CMD.sh $CMD_ARGS 2>&1)
         CMD_ERR="$?"
         print_dbg "command '$CMD' returned with error code '$CMD_ERR'"
@@ -170,3 +170,5 @@ __init__ $*
 
 validate_command
 execute_comand
+
+log_inf "[***] JustBash instance exiting"
