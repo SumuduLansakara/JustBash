@@ -1,4 +1,4 @@
-#arg_count=:3
+#ARG_COUNT=:3
 # terminal demo
 print_inf "> DEMO: Terminal"
 print_inf "demo command started"
@@ -19,13 +19,13 @@ draw_inf "JustBash Artist!"
 draw_wrn "Input>> '$*'"
 
 # toggle color demo
-print_inf ">> DEMO: toggle Terminal colors"
+print_inf "> DEMO: toggle Terminal colors"
 disable_colors
 print_inf "info message with colors disabled"
 enable_colors
 
 # rewriting demo
-print_inf ">> DEMO: Terminal Re-writing"
+print_inf "> DEMO: Terminal Re-writing"
 echo "[placeholder] this line gets re-written"
 disable_print_tags
 enable_rewrite
@@ -40,7 +40,7 @@ enable_print_tags
 # Use this to display a progress bar for an action with a known number of sub actions
 # e.g. copying a known number of files
 disable_cursor
-print_inf ">> DEMO: print_utils: print_progress"
+print_inf "> DEMO: print_utils: print_progress"
 echo "[placeholder] this line gets re-written"
 TOTAL_SUB_ACTIONS=13 # number of sub actions
 set_color $INF_CLR
@@ -58,11 +58,11 @@ enable_cursor
 # Use this to display a spinner for a process that takes a long time to complete
 # The process must be backgrounded while redirecting the output to /dev/null.
 # print_spinner method must be called before backgrounding any other process
-print_inf ">> DEMO: print_utils: print_spinner"
+print_inf "> DEMO: print_utils: print_spinner"
 sleep 5 & &>/dev/null
 print_spinner "I'm going to dance for 5 secs.. " 0.5
 
 # error code handeling demo
-print_inf ">> DEMO: command return error detection"
+print_inf "> DEMO: command return error detection"
 print_err "returning with fake error 123"
 exit 123

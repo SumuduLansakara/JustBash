@@ -19,7 +19,7 @@ function validate_arg_count(){
 
     print_dbg "start argument count validation"
     headline=$(head -n 1 "$1")
-    if [[ "$headline" =~ ^\#arg_count=([0-9]*):([0-9]*)$ ]]; then
+    if [[ "$headline" =~ ^\#ARG_COUNT=([0-9]*):([0-9]*)$ ]]; then
         min="${BASH_REMATCH[1]}"
         max="${BASH_REMATCH[2]}"
         if [[ -z $min ]]; then
