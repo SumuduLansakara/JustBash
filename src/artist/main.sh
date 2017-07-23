@@ -21,6 +21,19 @@ function __init__(){
         print_err "symbol file not available for artist font '$ARTIST_FONT'"
         exit 1
     fi
+
+    if $USE_TPUT; then
+        type tput &>/dev/null
+        if [[ $? -ne 0 ]]; then
+            print_err "tput not available"
+            exit 1
+        fi
+    else
+        if [[ $TERMINAL_WIDTH -eq 0 ]]; then
+            print_err "Terminal width cannot be zero"
+            exit 1
+        fi
+    fi
 }
 
 function __load_symbols__(){
@@ -63,22 +76,44 @@ function __draw_ascii__(){
     # $*: ascii codes to be drawn
     # Actual drawing happens here by picking symbols from the `ALPHABET` array and 
     #  drawing them row by row.
-    # This does not handle display-terminal width overflaws, 
-    # User must properly handle the lengths considering current display-terminal size.
+    # This automatically detects terminal width if tput usage is enabled and tput
+    #  is available. This function will automatically apply a line break when 
+    #  word-arts are about to exceed the terminal width
 
     if ! [[ -v ALPHABET[@] ]]; then
         __load_symbols__
     fi
-    for row in $(seq 0 $(($symbol_height-1))); do
-        for sym_ascii in $*; do
-            for col in $(seq 0 $((${ALPHABET_WIDTH[$sym_ascii]}-1))); do
-                index=$(($(($row * $block_width))+$col))
-                symbol=${ALPHABET[$sym_ascii]}
-                char="${symbol:$index:1}"
-                echo -n "${char/\./ }"
+    if $USE_TPUT; then
+        TERMINAL_WIDTH=$(tput cols)
+    fi
+    while [[ $# -gt 0 ]]; do
+        word_art_length=0
+        current_line_chars=0
+        for row in $(seq 0 $(($symbol_height-1))); do
+            current_row_chars=0
+            for sym_ascii in $*; do
+                if [[ $row == 0 ]]; then
+                    word_art_length=$(($word_art_length + ${ALPHABET_WIDTH[$sym_ascii]}))
+                    if [[ $word_art_length -gt $TERMINAL_WIDTH ]]; then
+                        break
+                    fi
+                    current_line_chars=$((current_line_chars + 1))
+                else
+                    if [[ $current_row_chars -ge $current_line_chars ]]; then
+                        break
+                    fi
+                    current_row_chars=$(($current_row_chars + 1))
+                fi
+                for col in $(seq 0 $((${ALPHABET_WIDTH[$sym_ascii]}-1))); do
+                    index=$(($(($row * $block_width))+$col))
+                    symbol=${ALPHABET[$sym_ascii]}
+                    char="${symbol:$index:1}"
+                    echo -n "${char/\./ }"
+                done
             done
+            echo ""
         done
-        echo ""
+        shift $current_line_chars
     done
 }
 

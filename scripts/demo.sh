@@ -29,6 +29,7 @@ log_inf "direct logging from command"
 # This might get a little slow. But will display the input text as word-arts!
 print_inf "> DEMO: Artist"
 draw_inf "JustBash Artist!"
+draw_txt "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" # artist multiline handling demo
 draw_wrn "Input>> '$*'"
 
 # toggle color demo
