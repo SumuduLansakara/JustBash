@@ -18,7 +18,7 @@ function __init__(){
     if $ENABLE_LOGGER; then
         . $ROOT/logger/main.sh
         if [[ $? -ne 0 ]]; then
-            echo "[WRN] errors occured while loading logger"
+            echo "[WRN] errors occurred while loading logger"
         fi
         log_inf "[***] JustBash logger started [PID=$$]"
     fi
@@ -34,7 +34,7 @@ function __init__(){
     if $ENABLE_ARTIST; then
         . $ROOT/artist/main.sh
         if [[ $? -ne 0 ]]; then
-            print_wrn "errors occured while loading artist"
+            print_wrn "errors occurred while loading artist"
         fi
         print_dbg "artist loaded"
         if $ENABLE_WELCOME_BANNER; then
@@ -44,7 +44,7 @@ function __init__(){
         fi
     fi
 
-    # load arg parser
+    # load argument parser
     . $ROOT/parser/main.sh
 
     # load print utilities
@@ -66,7 +66,7 @@ function __argparse__(){
         exit 1
     fi
 
-    # id, cmd, debug
+    # id, command, log-tag, debug, help
     SHORT_ARGS=i:c:l:dh
 
     PARSED=$(getopt --options $SHORT_ARGS --name "$0" -- "$@")
@@ -145,7 +145,7 @@ function validate_command(){
 }
 
 function execute_comand(){
-    print_dbg "command '$CMD' is about to be invoked with args '$CMD_ARGS'"
+    print_dbg "command '$CMD' is about to be invoked with arguments '$CMD_ARGS'"
     validate_arg_count "$SCRIPTDIR/$CMD.sh" "$CMD_ARG_COUNT"
 
     if $ENABLE_INTERACTIVE_MODE; then

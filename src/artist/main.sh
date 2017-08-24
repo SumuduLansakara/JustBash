@@ -40,13 +40,13 @@ function __load_symbols__(){
     # Loads the `ALPHABET` array from the currently pointed `SYMBOL_FILE`.
     # Symbol details must be provided inside the METADATA section.
     # Symbol definitions must start just after the METADATA section in the 
-    #  incremental order of the ascii code
+    #  incremental order of the ASCII code
     # Since Bash currently does not support exporting arrays, symbols are loaded
-    #  and kept locally for each subshell
+    #  and kept locally for each sub-shell
 
     for line in $(sed -n '/#>METADATA_BEGIN/,/#>METADATA_END/p' "$SYMBOL_FILE"); do
         if [[ $line =~ ^#\>BLOCK_WIDTH=([0-9]*)$ ]]; then
-            # actual_block_width = visible_width + 1 (for newline charactor)
+            # actual_block_width = visible_width + 1 (for newline character)
             export block_width="$((${BASH_REMATCH[1]}+1))" 
         elif [[ $line =~ ^#\>SYMBOL_HEIGHT=([0-9]*)$ ]]; then
             export symbol_height="${BASH_REMATCH[1]}"
@@ -73,7 +73,7 @@ function __load_symbols__(){
 }
 
 function __draw_ascii__(){
-    # $*: ascii codes to be drawn
+    # $*: ASCII codes to be drawn
     # Actual drawing happens here by picking symbols from the `ALPHABET` array and 
     #  drawing them row by row.
     # This automatically detects terminal width if tput usage is enabled and tput
@@ -119,8 +119,8 @@ function __draw_ascii__(){
 
 function __draw_text__(){
     # $1: text to be drawn
-    # Convert the charactors into ascii codes and pass them as a list 
-    #  of args to `__draw_ascii__` method
+    # Convert the characters into ASCII codes and pass them as a list 
+    #  of arguments to `__draw_ascii__` method
 
     for (( i=0; i<${#1}; i++)); do
         l[$i]=$(printf '%d\n' "'${1:i:1}")
