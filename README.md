@@ -11,79 +11,122 @@
 	
 ```
                                     
-## What is JustBash?
-JustBash is a highly customizable, bash based simplified scripting framework. It can be used for implementing a library of bash scripts for performing regular tasks without having to worry about logging, display formatting, input validation etc...
+# What is JustBash?
+*JustBash* is a highly customizable, bash based simplified scripting framework, which provides a simple interface for useful functionalities like logging, display formatting, input validation etc...
 
-Users can implement custom scripts for performing whatever task that can be done through bash and invoke them through JustBash. JustBash provides a set of simple and convenient functions for displaying messages, logging etc...
+Any regular bash script can be implemented as a *JustBash* script.
 
-## System requirements
-JustBash can be used in any Linux environment. It does not require any additional tools, it just uses the standard Linux tools available in most distributions by default.
+# System requirements
+JustBash can be used on any Linux environment.
+It does not depend on any additional tool, other than the standard Linux tools.
 
-## Usage
-JustBash main script is invoked with the name of the desired JustBash command, instance ID and other required arguments (command-line arguments for the JustBash script, debug flags etc..). Then from inside it will perform initial validations and invoke the requested script.
+# Usage
+1. Clone the repository
+2. Implement your script and put it inside *JustBash* scripts directory
+3. Call your script via *JustBash* 
 
-e.g. 
-``` sh
-    $ ./main.sh -i test_instance_1 -c test
-```
+# Example
+## Demo script
+*JustBash* comes with a pre-build demo script called "**jbdemo**" in the default scripts directory. Demo script shows the main features of *JustBash*.
 
-You can get usage syntax by invoking JustBash as below.
-``` sh
-    $ ./main.sh -h
-```
+The demo script can be quickely invoked as follows, from inside the *src* directory.
 
-### Instance ID
-Instance ID is there to make it easy to identify the JustBash instance while analyzing logs.
+    ./jb.sh -d -c jbdemo
+
+> **jb.sh** is the *JustBash* main script.
+Every JustBash script is invoked via the main script.
+
+# Usage syntax 
+
+*JustBash* usage syntax can be displayed as follows.
+
+    ./jb.sh -h
+
+This gives the following output.
+
+>Usage:
+>
+>  ./jb.sh [-i instance_id] [-l log_tag] [-c command_name] [-d] [-h] 
+>
+>Options:
+>
+>  -i <instance_id>  : JustBash instance id
+>
+>  -l <log_tag>      : optional tag to be used when logging current instance
+>
+>  -c <command_name> : command to be invoked
+>
+>  -d                : enable debug output
+>
+>  -h                : display this help message
+
+### *JustBash* instance ID (-i)
+Instance ID is there to make it easy to identify the corresponding JustBash instance while analyzing logs.
 
 Default JustBash logfile is created in the following format.
-```
-justbash-<INSTANCE ID>.log
-```
+    
+	justbash-<INSTANCE ID>.log
+
+> e.g.
+> Following log file will be created if invoked as "**jb.sh -i test_instance_1** ..."
+>   > **justbash-test_instance_1.log**
 
 All the log entries with the same instance ID will be written to a single file.
 
-### JustBash scripts
-JustBash scripts are implemented by the user. A JustBash script is an ordinary bash script which is implemented utilizing the features provided by JustBash.
+### Debug mode (-d)
+This mode is used for quick running a script for testing purposes. 
+With this flag instance id is not required and log entries will be written to a file called "**justbash-DEBUG.log**"
 
-## JustBash Features
-JustBash provides a set of functions and macros users can use from inside the JustBash script they are developing.
+> e.g.
+> In the examples above, the demo script is executed in debug mode without an instance ID "**./jb.sh -d -c jbdemo**"
 
-JustBash provides,
- - functions to display messages with different error levels
- - functions to display word-arts
- - logging functions to log messages with different error levels
- - ability to re-write lines (useful when displaying progress)
+### Command name (-c)
+Name of the script (or command) to be invoked.
+
+> e.g.
+> Demo script (named jbdemo) is invoked as "**jb.sh -c jbdemo ...**"
+
+# JustBash Features
+
+*JustBash* provides a set of functions and macros that can be used while implementing custom *JustBash* scripts.
+
+*JustBash* functions,
+ - functions for displaying messages with different error levels
+ - functions for displaying word-arts
+ - functions for logging messages with different error levels
+ - functions for re-write lines (useful when displaying progress)
+ - functions for changing display colors (and other terminal manipulations)
  - utility class with convenient functions for displaying complex outputs
- - ability to change display colors and other terminal manipulations
 
-JustBash macros,
- - macro to validate user defined scripts input argument count
+*JustBash* macros,
+ - macro to validate input argument count in *JustBash* scripts
 
-## How to implement a new JustBash script
-Create the new script inside the tools directory. 
+# How to implement a new *JustBash* script
+Create a file with the name of the script inside scripts directory
+(default directory is **scripts** in the top level of the git repository)
 
 e.g.
-``` sh
-vi tools/my_script.sh
-```
+
+    vi scripts/my_script.sh
 
 > Note that every script must have '.sh' extension.
-> When calling through JustBash, call without the extension.
+> However, extension is omitted when calling though *JustBash*.
 
-sample content.
-``` sh
-#arg_count=1:3
-print_inf "My First JustBash script"
-draw_txt "Hello World!"
-print_wrn "input arguments: " $*
+Sample content:
 
-```
+    #arg_count=1:3
+    print_inf "My First JustBash script"
+    draw_txt "Hello World!"
+    print_wrn "input arguments: " $*
 
-Invoke the new script through JustBash as below.
+> **arg_count** macro is used for validating input argument count of a *JustBash* script. 
+> It must be in the first line of a script and has the following syntax
 
-```
-$ ./main.sh -i test_instance -c my_script arg_1 arg_2
-```
+    #arg_count=<minimum argument count>:<maximum argument count>
+
+After implementation, the new script can be invoked as below.
+
+    ./jb.sh -i test_instance -c my_script arg_1 arg_2
 
 > Refer to the already implemented demo command for sample usage
 
