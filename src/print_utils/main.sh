@@ -18,7 +18,7 @@ function print_progress(){
 
     disable_autonewline
     __print__ '['
-    for j in $(seq 1 $3); do
+    for (( j=1; j<=$3; j++ )); do
         if [[ $(($1 * $3 / $2)) -lt $j ]]; then
             __print__ '-'
         else

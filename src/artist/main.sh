@@ -65,7 +65,7 @@ function __load_symbols__(){
 
     # Why incrementing symbol_height and sym_beg below?
     # > This is to ignore the symbol `WIDTH` metadata line present on top of each symbol
-    for sym_beg in $(seq $symbol_start_line $(($symbol_height+1)) $symbol_end_line); do
+    for (( sym_beg=symbol_start_line; sym_beg<=symbol_end_line; sym_beg+=symbol_height+1 )); do
         ALPHABET[$start_ascii]=$(sed -n "$(($sym_beg+1)),$(($sym_beg+$symbol_height))p" "$SYMBOL_FILE")
         ALPHABET_WIDTH[$start_ascii]=$(sed -n "${sym_beg}s/.*WIDTH=\([0-9]*\).*/\1/p" "$SYMBOL_FILE")
         start_ascii=$(($start_ascii+1))
@@ -89,7 +89,7 @@ function __draw_ascii__(){
     while [[ $# -gt 0 ]]; do
         word_art_length=0
         current_line_chars=0
-        for row in $(seq 0 $(($symbol_height-1))); do
+        for (( row=0; row<symbol_height; row++ )); do
             current_row_chars=0
             for sym_ascii in $*; do
                 if [[ $row == 0 ]]; then
@@ -104,7 +104,7 @@ function __draw_ascii__(){
                     fi
                     current_row_chars=$(($current_row_chars + 1))
                 fi
-                for col in $(seq 0 $((${ALPHABET_WIDTH[$sym_ascii]}-1))); do
+                for (( col=0; col<${ALPHABET_WIDTH[$sym_ascii]}; col++ )); do
                     index=$(($(($row * $block_width))+$col))
                     symbol=${ALPHABET[$sym_ascii]}
                     char="${symbol:$index:1}"
