@@ -7,8 +7,8 @@ function __init__(){
 
     if [[ -z $INSTANCEID ]]; then
         if ! $DEBUG_MODE; then
-            echo "[ERR] instance ID not provided"
-            exit 1
+            export INSTANCEID=0
+            echo "[WRN] instance ID not provided. Using default id: $INSTANCEID"
         fi
         export INSTANCEID="DEBUG"
         echo "[DBG] starting debug instance: $INSTANCEID"
