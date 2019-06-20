@@ -43,7 +43,7 @@ function validate_arg_count(){
         print_dbg "argument count valid. '$2' provided, expected [$min:$max]"
         return 0
     fi
-    print_wrn "metadata required for argument count validation not available"
+    print_dbg "metadata required for argument count validation not available"
     return 1
 }
 

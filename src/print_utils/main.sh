@@ -18,14 +18,19 @@ function print_progress(){
 
     disable_autonewline
     __print__ '['
-    for (( j=1; j<=$3; j++ )); do
-        if [[ $(($1 * $3 / $2)) -lt $j ]]; then
-            __print__ '-'
-        else
-            __print__ '#'
-        fi
-    done
-    __print__ "] $(printf '%2s' $(($1 * 100 / $2)) %)"
+    if [[ $1 -ge $2 ]]; then
+        __print__ "$(printf '#%.0s' $(seq 1 $3))"
+        __print__ "] 100 %"
+    else
+        for (( j=1; j<=$3; j++ )); do
+            if [[ $(($1 * $3 / $2)) -lt $j ]]; then
+                __print__ '-'
+            else
+                __print__ '#'
+            fi
+        done
+        __print__ "] $(printf '%3s' $(($1 * 100 / $2))) %"
+    fi
     enable_autonewline
 }
 

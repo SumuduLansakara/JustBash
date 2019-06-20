@@ -26,15 +26,9 @@ It does not depend on any additional tool, other than the standard Linux tools.
 3. Call your script via *JustBash* 
 
 # Example
-## Demo script
-*JustBash* comes with a pre-build demo script called "**jbdemo**" in the default scripts directory. Demo script shows the main features of *JustBash*.
-
-The demo script can be quickely invoked as follows, from inside the *src* directory.
-
-    ./jb.sh -d -c jbdemo
-
-> **jb.sh** is the *JustBash* main script.
-Every JustBash script is invoked via the main script.
+## Demo 
+Execute `demo.sh` in the repository root directory for a quick demonstration of JustBash capabilities.
+`demo.sh` sequentially invokes all the demo scripts available inside the scripts directory.
 
 # Usage syntax 
 

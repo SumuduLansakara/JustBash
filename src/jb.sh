@@ -5,11 +5,7 @@ export ROOT="$(dirname $0)"
 function __init__(){
     __argparse__ $*
 
-    if [[ -z $INSTANCEID ]]; then
-        if ! $DEBUG_MODE; then
-            export INSTANCEID=0
-            echo "[WRN] instance ID not provided. Using default id: $INSTANCEID"
-        fi
+    if $DEBUG_MODE; then
         export INSTANCEID="DEBUG"
         echo "[DBG] starting debug instance: $INSTANCEID"
     fi
@@ -78,6 +74,7 @@ function __argparse__(){
     eval set -- "$PARSED"
 
     export DEBUG_MODE=false
+    export INSTANCEID=0
     while true; do
         case "$1" in
             -i)
