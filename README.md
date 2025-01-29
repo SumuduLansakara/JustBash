@@ -18,27 +18,24 @@
 ```
                                     
 # What is JustBash?
-*JustBash* is a simple framework for implementing bash scripts.
-It provides convenient functionalities for logging, display formatting, input validation etc...
+*JustBash* is a simple framework for implementing bash scripts. It provides convenient functionalities for logging, display formatting, input validation, etc.
 
 Any regular bash script can be implemented as a *JustBash* script.
 
 # System Requirements
-*JustBash* can be used on any Linux environment.
-It only depends on standard GNU utilities available in any standard Linux distribution.
+*JustBash* can be used on any Linux environment. It only depends on standard GNU utilities available in any standard Linux distribution.
 
-# How can I use it ?
-1. Clone the repository
-2. Implement your script and put it inside *JustBash* scripts directory
-3. Call your script via *JustBash* 
+# How to Use JustBash
+1. Clone the repository.
+2. Implement your script and place it inside the *JustBash* scripts directory.
+3. Call your script via *JustBash*.
 
 ## Demo
-Execute `demo.sh` in the repository root directory for a quick demonstration of JustBash capabilities.
-This sequentially invokes all the demo scripts available in the scripts directory.
+Execute `demo.sh` in the repository root directory for a quick demonstration of JustBash capabilities. This sequentially invokes all the demo scripts available in the scripts directory.
 
-# Usage syntax 
+# Usage Syntax 
 
-Invoke *JustBash* with `-h` flag to display usage syntax.
+Invoke *JustBash* with the `-h` flag to display usage syntax.
 
 ```
 $ ./jb.sh -h
@@ -55,15 +52,15 @@ Options:
 
 ### Instance ID ( -i )
 
-Each *JustBash* instance need to have an ID. This is helpful when analyzing logs.
+Each *JustBash* instance needs to have an ID. This is helpful when analyzing logs.
 
-Default JustBash logfile is created in the following format.
+The default JustBash logfile is created in the following format:
     
 	justbash-<INSTANCE ID>.log
 	
 > **Hints:**
-> - Any string can be used as the instance ID
-> - Instance ID doesn't need to be unique. Related instances maybe be given the same ID for convenience. In which case all the log entries will be written to the same log file.
+> - Any string can be used as the instance ID.
+> - Instance ID doesn't need to be unique. Related instances may be given the same ID for convenience, in which case all the log entries will be written to the same log file.
 
 > **Example:**
 > ```
@@ -71,23 +68,23 @@ Default JustBash logfile is created in the following format.
 > ```
 	
 
-### Debug mode ( -d )
+### Debug Mode ( -d )
 
 Useful for quickly running a custom *JustBash* script for testing purposes.
 
 Instance ID is not needed in debug runs. 
-All the log entries are written to debug log file `justbash-DEBUG.log`.
+All the log entries are written to the debug log file `justbash-DEBUG.log`.
 
 > **Example:**
 > ```
 > ./jb.sh -d -c demoArtist
 > ```
 
-### Command name (-c)
+### Command Name (-c)
 Name of the script to be invoked.
 
 > **Hints:**
-> - This is a path to a *JustBash* script relative to scripts directory, without the file extension.
+> - This is a path to a *JustBash* script relative to the scripts directory, without the file extension.
 
 > **Example:**
 > ```
@@ -96,32 +93,32 @@ Name of the script to be invoked.
 
 # Features
 
-*JustBash* provides a set of functions and macros to support implementation of custom scripts.
+*JustBash* provides a set of functions and macros to support the implementation of custom scripts.
 
 Functions:
- - functions for displaying messages with different error levels
- - functions for displaying word-arts
- - functions for logging messages with different error levels
- - functions for re-write lines (useful when displaying progress)
- - functions for changing display colors (and other terminal manipulations)
- - utility class with convenient functions for displaying complex outputs
+ - Functions for displaying messages with different error levels.
+ - Functions for displaying word-arts.
+ - Functions for logging messages with different error levels.
+ - Functions for re-writing lines (useful when displaying progress).
+ - Functions for changing display colors (and other terminal manipulations).
+ - Utility class with convenient functions for displaying complex outputs.
 
 Macros:
- - macro to validate input argument count in *JustBash* scripts
+ - Macro to validate input argument count in *JustBash* scripts.
 
-# How to implement a custom *JustBash* script ?
+# How to Implement a Custom *JustBash* Script
 
 ### Step 1:
 
-Create a file with the desired name inside scripts directory (by default this is the `scripts` directory in the repository root).
+Create a file with the desired name inside the scripts directory (by default this is the `scripts` directory in the repository root).
 
 E.g.
 
     vi scripts/my_script.sh
 
 > **Hints:**
-> - Every script must have `.sh` file extension.
-> - Extension must be omitted when invoking.
+> - Every script must have a `.sh` file extension.
+> - The extension must be omitted when invoking.
 
 ### Step 2:
 
@@ -135,16 +132,16 @@ E.g.
     print_wrn "input arguments: $*"
 
 > **Hints:**
-> - `arg_count` macro can be used for validating input argument count.
-> - `arg_count` macro must be in the first line of the script.
-> - `arg_count` macro syntax is as follows:
+> - The `arg_count` macro can be used for validating input argument count.
+> - The `arg_count` macro must be in the first line of the script.
+> - The `arg_count` macro syntax is as follows:
 > ```
 >   #arg_count=<minimum argument count>:<maximum argument count>
 > ```
 
 ### Step 3:
 
-Invoke the script !
+Invoke the script!
 
 E.g.
 
